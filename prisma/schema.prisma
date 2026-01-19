@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model for authentication
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  events Event[]
+  
+  @@map("users")
+}
+
+// Event model
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  description String?  @db.Text
+  slug        String   @unique
+  date        DateTime
+  location    String?
+  capacity    Int?
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rsvps  RSVP[]
+
+  @@index([userId])
+  @@index([slug])
+  @@map("events")
+}
+
+// RSVP model
+model RSVP {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  status    RSVPStatus @default(PENDING)
+  createdAt DateTime @default(now())
+
+  // Relations
+  eventId String
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@index([eventId])
+  @@index([email])
+  @@map("rsvps")
+}
+
+enum RSVPStatus {
+  PENDING
+  CONFIRMED
+  DECLINED
+}
