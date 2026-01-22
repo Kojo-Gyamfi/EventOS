@@ -47,23 +47,25 @@ export default function EventTable({ events, onDelete }: EventTableProps) {
             <TableCell className="text-right">
               <div className="flex items-center justify-end gap-2">
                 <Link href={`/events/${event.slug}`} target="_blank">
-                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0" title="View Public Page">
-                    <Eye className="w-4 h-4" />
+                  <Button variant="ghost" size="sm" className="h-10 w-10 p-0" title="View Public Page">  
+                    <Eye className="w-5 h-5" />
                   </Button>
                 </Link>
                 <Link href={`/dashboard/events/${event.id}`}>
-                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0" title="Edit Event">
-                    <Edit className="w-4 h-4" />
+                  <Button variant="ghost" size="sm" className="h-10 w-10 p-0" title="Edit Event">
+                    <Edit className="w-5 h-5" />
                   </Button>
                 </Link>
                 <Button 
                     variant="ghost" 
                     size="sm" 
-                    className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
-                    onClick={() => onDelete(event.id)}
+                    className="h-10 w-10 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
+                    onClick={() => {
+                      onDelete(event.id)
+                    }}
                     title="Delete Event"
                 >
-                  <Trash2 className="w-4 h-4" />
+                  <Trash2 className="w-5 h-5" />
                 </Button>
               </div>
             </TableCell>

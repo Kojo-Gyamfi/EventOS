@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import Button from '@/components/ui/Button'
+import { toast } from 'react-toastify';
 
 export default function DashboardLayoutClient({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
@@ -106,9 +107,12 @@ export default function DashboardLayoutClient({ children }: { children: React.Re
                 </div>
             </div>
             <button
-              onClick={() => signOut({ callbackUrl: '/auth/login' })}
-              className="flex w-full items-center gap-3 px-3 py-2 text-sm font-medium text-red-600 rounded-lg hover:bg-red-50 transition-colors"
-            >
+                onClick={() => {
+                  signOut({ callbackUrl: '/auth/login' })
+                  toast("Log out Successfully")
+                }}
+                className="flex w-full items-center gap-3 px-3 py-2 text-sm font-medium text-red-600 rounded-lg hover:bg-red-50 transition-colors"
+              >
               <LogOut className="w-5 h-5" />
               Sign Out
             </button>

@@ -8,6 +8,7 @@ import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Card from '@/components/ui/Card'
 import { CheckCircle } from 'lucide-react'
+import { toast } from 'react-toastify';
 
 interface RSVPFormProps {
   eventId: string
@@ -43,6 +44,7 @@ export default function RSVPForm({ eventId, eventName }: RSVPFormProps) {
       }
 
       setSuccess(true)
+      toast("RSVP saved successfully")
     } catch (err) {
       setError('Something went wrong. Please try again.')
     } finally {

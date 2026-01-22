@@ -31,7 +31,7 @@ export default function AttendeeList({ rsvps }: AttendeeListProps) {
           {rsvps.map((rsvp) => (
             <TableRow key={rsvp.id}>
               <TableCell className="font-medium text-slate-900">{rsvp.name}</TableCell>
-              <TableCell>{rsvp.email}</TableCell>
+              <TableCell className="font-medium text-slate-900">{rsvp.email}</TableCell>
               <TableCell>
                 <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                     rsvp.status === 'CONFIRMED' ? 'bg-green-100 text-green-800' :
@@ -41,7 +41,7 @@ export default function AttendeeList({ rsvps }: AttendeeListProps) {
                     {rsvp.status}
                 </span>
               </TableCell>
-              <TableCell>{formatDate(rsvp.createdAt)}</TableCell>
+              <TableCell className="font-medium text-slate-900">{formatDate(rsvp.createdAt)}</TableCell>
             </TableRow>
           ))}
         </TableBody>

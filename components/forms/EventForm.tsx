@@ -9,6 +9,7 @@ import { eventSchema, type EventInput, type EventFormInput } from '@/lib/validat
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Card from '@/components/ui/Card'
+import { toast } from 'react-toastify';
 
 interface EventFormProps {
   initialData?: any // TODO: Type properly with Prisma types
@@ -57,6 +58,7 @@ export default function EventForm({ initialData, isEditing = false }: EventFormP
       }
 
       router.push('/dashboard')
+      toast("Event created successfully")
       router.refresh()
     } catch (err) {
       setError('Something went wrong')

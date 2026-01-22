@@ -9,6 +9,7 @@ import { registerSchema, type RegisterInput } from '@/lib/validators'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Card from '@/components/ui/Card'
+import { toast } from 'react-toastify';
 import Image from 'next/image'
 
 export default function RegisterPage() {
@@ -44,6 +45,7 @@ export default function RegisterPage() {
 
       // Redirect to login after successful registration
       router.push('/auth/login?registered=true')
+      toast("Register Successfully");
     } catch (err) {
       setError('Something went wrong')
     } finally {

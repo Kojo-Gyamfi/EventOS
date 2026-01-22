@@ -76,7 +76,7 @@ export default function EventsPageClient({ events: initialEvents }: { events: an
             )}
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden text-slate-900">
             <EventTable events={initialEvents} onDelete={handleDelete} />
         </div>
       )}

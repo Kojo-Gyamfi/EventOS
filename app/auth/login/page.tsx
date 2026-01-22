@@ -10,9 +10,11 @@ import { loginSchema, type LoginInput } from '@/lib/validators'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Card from '@/components/ui/Card'
+import { toast } from 'react-toastify';
 import Image from 'next/image'
 
 export default function LoginPage() {
+
   const router = useRouter()
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -40,6 +42,7 @@ export default function LoginPage() {
         setError('Invalid email or password')
       } else {
         router.push('/dashboard')
+        toast("Log in Successfully");
         router.refresh()
       }
     } catch (err) {
