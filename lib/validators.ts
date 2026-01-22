@@ -35,6 +35,7 @@ export const eventSchema = z.object({
 })
 
 export type EventInput = z.infer<typeof eventSchema>
+export type EventFormInput = z.input<typeof eventSchema>
 
 // RSVP validation schema
 export const rsvpSchema = z.object({
@@ -44,3 +45,4 @@ export const rsvpSchema = z.object({
 })
 
 export type RSVPInput = z.infer<typeof rsvpSchema>
+export type RSVPFormInput = z.input<typeof rsvpSchema>
