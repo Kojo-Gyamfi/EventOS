@@ -1,4 +1,4 @@
-import { Calendar, Users, MapPin, Clock } from 'lucide-react'
+import { Calendar, Users, MapPin, Clock, Eye, Edit, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
@@ -12,13 +12,15 @@ interface EventCardProps {
     location?: string | null
     capacity?: number | null
     imageUrl?: string | null
+    slug: string
     _count?: {
       rsvps: number
     }
   }
+  onDelete?: (id: string) => void
 }
 
-export default function EventCard({ event }: EventCardProps) {
+export default function EventCard({ event, onDelete }: EventCardProps) {
   return (
     <Card className="hover:shadow-md transition-shadow duration-300 flex flex-col h-full overflow-hidden p-0">
       {/* Event Image or Placeholder */}
@@ -57,11 +59,31 @@ export default function EventCard({ event }: EventCardProps) {
           )}
         </div>
 
-        <Link href={`/dashboard/events/${event.id}`}>
-          <Button variant="outline" className="w-full" size="sm">
-            Manage Event
-          </Button>
-        </Link>
+        <div className="flex items-center gap-2 mt-auto">
+          <Link href={`/events/${event.slug}`} target="_blank" className="flex-1">
+            <Button variant="outline" className="w-full gap-2" size="sm" title="View Public Page">
+              <Eye className="w-4 h-4" />
+              View
+            </Button>
+          </Link>
+          <Link href={`/dashboard/events/${event.id}`} className="flex-1">
+            <Button variant="outline" className="w-full gap-2" size="sm" title="Edit Event">
+              <Edit className="w-4 h-4" />
+              Edit
+            </Button>
+          </Link>
+          {onDelete && (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="px-3 text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200 hover:border-red-300"
+              onClick={() => onDelete(event.id)}
+              title="Delete Event"
+            >
+              <Trash2 className="w-4 h-4" />
+            </Button>
+          )}
+        </div>
       </div>
     </Card>
   )

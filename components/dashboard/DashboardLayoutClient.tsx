@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { signOut, useSession } from 'next-auth/react'
 import { 
   LayoutDashboard, 
@@ -18,6 +18,7 @@ import { toast } from 'react-toastify';
 export default function DashboardLayoutClient({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
   const { data: session } = useSession()
 
   const navigation = [
@@ -107,9 +108,10 @@ export default function DashboardLayoutClient({ children }: { children: React.Re
                 </div>
             </div>
             <button
-                onClick={() => {
-                  signOut({ callbackUrl: '/auth/login' })
-                  toast("Log out Successfully")
+                onClick={async () => {
+                  await signOut({ redirect: false })
+                  toast.success("Logged out successfully")
+                  router.push('/auth/login')
                 }}
                 className="flex w-full items-center gap-3 px-3 py-2 text-sm font-medium text-red-600 rounded-lg hover:bg-red-50 transition-colors"
               >
