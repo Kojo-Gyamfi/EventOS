@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Lock } from 'lucide-react'
 import Link from 'next/link'
+import { toast } from 'react-toastify'
 import { resetPasswordSchema, type ResetPasswordInput } from '@/lib/validators'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
@@ -16,7 +17,6 @@ export default function ResetPasswordForm() {
   const searchParams = useSearchParams()
   const token = searchParams.get('token')
 
-  const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -30,12 +30,11 @@ export default function ResetPasswordForm() {
 
   const onSubmit = async (data: ResetPasswordInput) => {
     if (!token) {
-        setError('Missing reset token. Please request a new link.')
+        toast.error('Missing reset token. Please request a new link.')
         return
     }
 
     setIsLoading(true)
-    setError('')
 
     try {
       const response = await fetch('/api/auth/reset-password', {
@@ -51,8 +50,9 @@ export default function ResetPasswordForm() {
       }
 
       setSuccess(true)
+      toast.success('Password reset successfully! You can now login.')
     } catch (err: any) {
-      setError(err.message || 'Something went wrong')
+      toast.error(err.message || 'Failed to reset password. Please try again.')
     } finally {
       setIsLoading(false)
     }
@@ -107,11 +107,6 @@ export default function ResetPasswordForm() {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        {error && (
-            <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
-              {error}
-            </div>
-        )}
 
         <Input
             label="New Password"

@@ -5,13 +5,13 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Mail } from 'lucide-react'
 import Link from 'next/link'
+import { toast } from 'react-toastify'
 import { forgotPasswordSchema, type ForgotPasswordInput } from '@/lib/validators'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Card from '@/components/ui/Card'
 
 export default function ForgotPasswordForm() {
-  const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -25,7 +25,6 @@ export default function ForgotPasswordForm() {
 
   const onSubmit = async (data: ForgotPasswordInput) => {
     setIsLoading(true)
-    setError('')
     setSuccess(false)
 
     try {
@@ -42,8 +41,11 @@ export default function ForgotPasswordForm() {
       }
 
       setSuccess(true)
+      toast.success('Password reset link sent! It may take 1-2 minutes to arrive. Check your spam folder if you don\'t see it.', {
+        autoClose: 6000 // Show for 6 seconds instead of default 5
+      })
     } catch (err: any) {
-      setError(err.message || 'Something went wrong')
+      toast.error(err.message || 'Failed to send reset link. Please try again.')
     } finally {
       setIsLoading(false)
     }
@@ -80,12 +82,6 @@ export default function ForgotPasswordForm() {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        {error && (
-            <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
-              {error}
-            </div>
-        )}
-
         <Input
             label="Email Address"
             placeholder="you@example.com"
