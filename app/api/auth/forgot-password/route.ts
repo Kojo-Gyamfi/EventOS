@@ -29,16 +29,26 @@ export async function POST(req: Request) {
 
     const verificationToken = await generatePasswordResetToken(email)
     
-    // In a real app, send email here.
-    // For now, log the reset URL to console.
+    // Send password reset email asynchronously (don't wait for it)
     const resetLink = `${process.env.NEXTAUTH_URL}/auth/reset-password?token=${verificationToken.token}`
     
-    console.log('==============================================')
-    console.log(`[Forgot Password] Reset Link for ${email}:`)
-    console.log(resetLink)
-    console.log('==============================================')
+    // Send email in background without blocking the response
+    const { sendPasswordResetEmail } = await import('@/lib/email')
+    sendPasswordResetEmail(email, verificationToken.token)
+      .then(() => {
+        console.log('✅ Password reset email sent successfully to:', email)
+        console.log('Reset Link:', resetLink)
+      })
+      .catch((emailError) => {
+        console.error('❌ Failed to send password reset email:', emailError)
+        console.log('Fallback - Reset Link for', email, ':', resetLink)
+      })
 
-    return NextResponse.json({ success: true, message: 'Reset email sent' })
+    // Respond immediately without waiting for email
+    return NextResponse.json({ 
+      success: true, 
+      message: 'If your email exists in our system, you will receive a password reset link shortly.' 
+    })
 
   } catch (error) {
     console.error('Forgot password error:', error)
