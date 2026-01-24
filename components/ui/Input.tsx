@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
   error?: string
-  helperText?: string
+  helperText?: React.ReactNode
   variant?: 'default' | 'dark'
   icon?: React.ReactNode
 }

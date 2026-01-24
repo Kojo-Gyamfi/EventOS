@@ -105,30 +105,24 @@ export default function LoginPage() {
             {...register('email')}
           />
 
-          <div>
-            <div className="flex items-center justify-between mb-1.5">
-              <label className="block text-sm font-medium text-white">Password</label>
+          <Input
+            label="Password"
+            type="password"
+            placeholder="••••••••"
+            variant="dark"
+            icon={
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+            }
+            error={errors.password?.message}
+            {...register('password')}
+            helperText={
               <Link href="/auth/forgot-password" className="text-sm text-slate-300 hover:text-white transition-colors">
                 Forgot password?
               </Link>
-            </div>
-            <div className="relative">
-              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
-              </div>
-              <input
-                type="password"
-                placeholder="••••••••"
-                className="w-full py-2.5 pl-10 pr-4 rounded-lg border transition-all duration-200 bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:border-transparent focus:ring-blue-500 focus:bg-slate-700/70 hover:border-slate-500"
-                {...register('password')}
-              />
-            </div>
-            {errors.password?.message && (
-              <p className="mt-1.5 text-sm text-red-400">{errors.password.message}</p>
-            )}
-          </div>
+            }
+          />
 
           <Button
             type="submit"

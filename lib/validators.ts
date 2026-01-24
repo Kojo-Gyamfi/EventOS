@@ -46,3 +46,21 @@ export const rsvpSchema = z.object({
 
 export type RSVPInput = z.infer<typeof rsvpSchema>
 export type RSVPFormInput = z.input<typeof rsvpSchema>
+
+// Forgot Password validation schema
+export const forgotPasswordSchema = z.object({
+  email: z.string().email('Invalid email address'),
+})
+
+export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>
+
+// Reset Password validation schema
+export const resetPasswordSchema = z.object({
+  password: z.string().min(6, 'Password must be at least 6 characters'),
+  confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ['confirmPassword'],
+})
+
+export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>
