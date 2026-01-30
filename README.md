@@ -116,16 +116,6 @@ This project was built with **maintainability and clarity** in mind.
 
 ---
 
-## 🔮 Future Improvements
-
-* Role-based access (Admin / Organizer)
-* CSV export for attendees
-* Calendar view for events
-* Email notifications for RSVPs
-* Dark mode 🌙
-
----
-
 ## 🙌 Acknowledgements
 
 Inspired by real-world tools like:
