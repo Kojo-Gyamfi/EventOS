@@ -1,36 +1,148 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎉 Event Management Dashboard (EventOS)
 
-## Getting Started
+A modern **Event Management Dashboard** built with **Next.js App Router** that allows organizers to create, manage, and publish events, while providing a clean public RSVP experience for attendees.
 
-First, run the development server:
+This project focuses on **real-world frontend architecture**, **server-driven UI**, and **production-ready patterns** suitable for an intermediate frontend developer portfolio.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🧠 Project Motivation
+
+This project was built to:
+
+* Practice **modern Next.js patterns** (App Router, Server Actions)
+* Simulate **real product workflows** (draft → publish → manage attendees)
+* Go beyond basic CRUD and focus on **UX, structure, and maintainability**
+* Create a **strong portfolio project** for frontend roles
+
+---
+
+## ✨ Features
+
+### 🔐 Authentication
+
+* Email & password authentication
+* Protected dashboard routes
+* Public event pages (no login required)
+
+### 📅 Event Management
+
+* Create, edit, publish, and delete events
+* Event statuses: **Draft · Published · Past**
+* Automatic slug generation for public URLs
+* Capacity management
+
+### 🧾 RSVP System
+
+* Public RSVP form
+* Capacity limit enforcement
+* Duplicate RSVP prevention
+* Attendee list with counts
+
+### 📊 Dashboard
+
+* Event list with filters (upcoming / past)
+* Event details view
+* Attendee management
+* Clean admin-style UI
+
+### 🎨 UX & UI
+
+* Loading skeletons
+* Empty states
+* Form validation with clear errors
+* Responsive layout (mobile-friendly)
+
+---
+
+## 🧱 Tech Stack
+
+| Category   | Technology               |
+| ---------- | ------------------------ |
+| Framework  | **Next.js (App Router)** |
+| Language   | **TypeScript**           |
+| Styling    | **Tailwind CSS**         |
+| Auth       | **NextAuth / Auth.js**   |
+| Database   | **Prisma + SQL**         |
+| Validation | **Zod**                  |
+| Deployment | **Vercel**               |
+
+---
+
+## 🗂️ Folder Structure
+
+```
+app/
+├─ auth/              # Login & register pages
+├─ dashboard/         # Protected dashboard
+│  ├─ events/         # Event management
+│  └─ layout.tsx      # Sidebar + navbar
+├─ events/[slug]/     # Public event page
+components/
+├─ ui/                # Reusable UI components
+├─ forms/             # EventForm, RSVPForm
+├─ dashboard/         # Tables & dashboard components
+lib/
+├─ db.ts              # Prisma client
+├─ auth.ts            # Auth helpers
+├─ validators.ts      # Zod schemas
+middleware.ts         # Route protection
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This structure was designed to be **scalable, readable, and production-friendly**.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🧩 Core Data Models
 
-## Learn More
+* **User**
+* **Event**
+* **RSVP**
 
-To learn more about Next.js, take a look at the following resources:
+The data model is intentionally simple but realistic, avoiding over-engineering while still supporting real workflows.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔍 What This Project Demonstrates
 
-## Deploy on Vercel
+* ✅ Proper use of **Next.js App Router**
+* ✅ Server Actions for mutations
+* ✅ Authentication & route protection
+* ✅ Clean folder architecture
+* ✅ Real-world dashboard patterns
+* ✅ Strong UX fundamentals
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project was built with **maintainability and clarity** in mind.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🔮 Future Improvements
+
+* Role-based access (Admin / Organizer)
+* CSV export for attendees
+* Calendar view for events
+* Email notifications for RSVPs
+* Dark mode 🌙
+
+---
+
+## 🙌 Acknowledgements
+
+Inspired by real-world tools like:
+
+* Eventbrite
+* Meetup
+* Internal admin dashboards used in SaaS products
+
+---
+
+## 📬 Feedback
+
+If you have feedback or suggestions, feel free to open an issue or reach out.
+This project is part of my continuous learning journey 🚀
+
+---
+
+### ⭐ If you like this project, consider giving it a star!
+
+---
