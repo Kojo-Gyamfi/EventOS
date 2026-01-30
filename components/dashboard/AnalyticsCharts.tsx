@@ -11,6 +11,7 @@ import {
   LineChart,
   Line,
 } from 'recharts'
+import { useState, useEffect } from 'react'
 import Card from '@/components/ui/Card'
 
 interface AnalyticsChartsProps {
@@ -26,10 +27,33 @@ interface AnalyticsChartsProps {
 }
 
 export default function AnalyticsCharts({ overviewData, growthData }: AnalyticsChartsProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card title="RSVP Overview">
+          <div className="h-[300px] w-full flex items-center justify-center bg-slate-50 rounded-lg animate-pulse">
+            <span className="text-slate-400">Loading Chart...</span>
+          </div>
+        </Card>
+        <Card title="Activity Trends">
+          <div className="h-[300px] w-full flex items-center justify-center bg-slate-50 rounded-lg animate-pulse">
+            <span className="text-slate-400">Loading Trends...</span>
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <Card title="RSVP Overview">
-        <div className="h-[300px] w-full">
+        <div className="h-[300px] w-full min-w-0">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={overviewData} layout="vertical" margin={{ left: 20 }}>
               <CartesianGrid strokeDasharray="3 3" vertical={true} horizontal={false} />
@@ -84,7 +108,7 @@ export default function AnalyticsCharts({ overviewData, growthData }: AnalyticsC
       </Card>
 
       <Card title="Activity Trends">
-        <div className="h-[300px] w-full">
+        <div className="h-[300px] w-full min-w-0">
             {growthData.length > 1 ? (
                 <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={growthData} margin={{ left: -20, right: 10 }}>
