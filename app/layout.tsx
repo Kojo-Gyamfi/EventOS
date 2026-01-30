@@ -27,16 +27,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        
           <AuthProvider>
             <ToastContainer position="top-center" />
             {children}
           </AuthProvider>
-       
       </body>
     </html>
   );
