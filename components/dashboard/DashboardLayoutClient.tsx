@@ -16,6 +16,8 @@ import { cn } from '@/lib/utils'
 import Button from '@/components/ui/Button'
 import { toast } from 'react-toastify';
 
+
+
 export default function DashboardLayoutClient({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const pathname = usePathname()
@@ -57,6 +59,7 @@ export default function DashboardLayoutClient({ children }: { children: React.Re
                 <span className="font-bold text-xl bg-gradient-to-r from-blue-700 to-sky-500 bg-clip-text text-transparent">
                   EventOS
                 </span>
+               
              </Link>
           </div>
 
