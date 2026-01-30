@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -14,8 +15,16 @@ import Image from 'next/image'
 
 export default function RegisterPage() {
   const router = useRouter()
+  const { data: session, status } = useSession()
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+
+  // Redirect to dashboard if already logged in
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.push('/dashboard')
+    }
+  }, [status, router])
 
   const {
     register,
