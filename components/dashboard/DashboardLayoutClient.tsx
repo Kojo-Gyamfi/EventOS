@@ -9,7 +9,8 @@ import {
   CalendarDays, 
   LogOut, 
   Menu, 
-  Plus
+  Plus,
+  BarChart3
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import Button from '@/components/ui/Button'
@@ -24,6 +25,7 @@ export default function DashboardLayoutClient({ children }: { children: React.Re
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Events', href: '/dashboard/events', icon: CalendarDays },
+    { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3 },
   ]
 
   return (

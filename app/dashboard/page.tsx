@@ -13,22 +13,24 @@ export default async function DashboardPage() {
   
   if (!session?.user) return null
 
-  // Fetch user stats
+  // Fetch user stats with more granular data
   const events = await db.event.findMany({
     where: { userId: session.user.id },
     include: {
+        rsvps: true, // Fetch all RSVPs to calculate specific stats
         _count: {
             select: { rsvps: true }
         }
     },
     orderBy: { createdAt: 'desc' },
-    take: 5 
   })
 
-  // Calculate generic stats
+  // Calculate detailed stats
   const totalEvents = await db.event.count({ where: { userId: session.user.id } })
-  
-  const totalRSVPs = events.reduce((acc: number, curr: any) => acc + (curr._count?.rsvps || 0), 0) // Approximation based on recent events for now, proper would be aggregation
+  const totalRSVPs = events.reduce((acc, curr) => acc + (curr._count?.rsvps || 0), 0)
+
+  // Recent 5 events for the list
+  const recentEvents = events.slice(0, 5)
 
   return (
     <div className="space-y-8">
@@ -75,11 +77,13 @@ export default async function DashboardPage() {
            <div>
              <p className="text-sm font-medium text-slate-500">Active Now</p>
              <p className="text-2xl font-bold text-slate-900">
-                {events.filter((e: any) => new Date(e.date) > new Date()).length}
+                {events.filter((e) => new Date(e.date) > new Date()).length}
              </p>
            </div>
         </Card>
       </div>
+
+
 
       {/* Recent Events Section */}
       <div className="space-y-4">
@@ -90,7 +94,7 @@ export default async function DashboardPage() {
            </Link>
         </div>
 
-        {events.length === 0 ? (
+        {recentEvents.length === 0 ? (
           <Card className="text-center py-12 bg-slate-50 border-dashed border-2 border-slate-200">
              <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
                 <CalendarDays className="w-8 h-8 text-slate-300" />
@@ -103,7 +107,7 @@ export default async function DashboardPage() {
           </Card>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {events.map((event: any) => (
+            {recentEvents.map((event) => (
                <EventCard key={event.id} event={event} />
             ))}
           </div>
