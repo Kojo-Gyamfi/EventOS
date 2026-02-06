@@ -1,17 +1,20 @@
+import { Suspense } from 'react'
 import ResetPasswordForm from '@/components/forms/ResetPasswordForm'
 
 export default function ResetPasswordPage() {
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-        {/* Background blobs for consistency */}
-        <div className="fixed inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-100 rounded-full blur-3xl opacity-20 -translate-y-1/2 translate-x-1/2" />
-            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-100 rounded-full blur-3xl opacity-20 translate-y-1/2 -translate-x-1/2" />
-        </div>
-        
-        <div className="relative z-10 w-full flex justify-center">
-            <ResetPasswordForm />
-        </div>
+      {/* Background blobs for consistency */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-100 rounded-full blur-3xl opacity-20 -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-100 rounded-full blur-3xl opacity-20 translate-y-1/2 -translate-x-1/2" />
+      </div>
+
+      <div className="relative z-10 w-full flex justify-center">
+        <Suspense fallback={<div className="text-center">Loading...</div>}>
+          <ResetPasswordForm />
+        </Suspense>
+      </div>
     </div>
   )
 }
