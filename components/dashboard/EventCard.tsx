@@ -26,8 +26,8 @@ export default function EventCard({ event, onDelete }: EventCardProps) {
       {/* Event Image or Placeholder */}
       <div className="h-48 bg-slate-100 relative group">
         {event.imageUrl ? (
-          <img 
-            src={event.imageUrl} 
+          <img
+            src={event.imageUrl}
             alt={event.title}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
@@ -37,7 +37,7 @@ export default function EventCard({ event, onDelete }: EventCardProps) {
           </div>
         )}
         <div className="absolute top-4 right-4 bg-white/90 backdrop-blur rounded-full px-3 py-1 text-xs font-bold text-blue-700 shadow-sm">
-           {event._count?.rsvps || 0} RSVPs
+          {event._count?.rsvps || 0} RSVPs
         </div>
       </div>
 
@@ -45,7 +45,7 @@ export default function EventCard({ event, onDelete }: EventCardProps) {
         <h3 className="text-lg font-bold text-slate-900 mb-2 line-clamp-1">
           {event.title}
         </h3>
-        
+
         <div className="space-y-2 text-sm text-slate-600 mb-6 flex-1">
           <div className="flex items-center gap-2">
             <Clock className="w-4 h-4 text-blue-500" />
@@ -60,7 +60,7 @@ export default function EventCard({ event, onDelete }: EventCardProps) {
         </div>
 
         <div className="flex items-center gap-2 mt-auto">
-          <Link href={`/events/${event.slug}`} target="_blank" className="flex-1">
+          <Link href={`/events/${event.slug}`} className="flex-1">
             <Button variant="outline" className="w-full gap-2" size="sm" title="View Public Page">
               <Eye className="w-4 h-4" />
               View
@@ -73,9 +73,9 @@ export default function EventCard({ event, onDelete }: EventCardProps) {
             </Button>
           </Link>
           {onDelete && (
-            <Button 
-              variant="outline" 
-              size="sm" 
+            <Button
+              variant="outline"
+              size="sm"
               className="px-3 text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200 hover:border-red-300"
               onClick={() => onDelete(event.id)}
               title="Delete Event"
