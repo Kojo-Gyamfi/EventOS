@@ -1,5 +1,6 @@
-import { InputHTMLAttributes, forwardRef } from 'react'
+import { InputHTMLAttributes, forwardRef, useState } from 'react'
 import { cn } from '@/lib/utils'
+import { Eye, EyeOff } from 'lucide-react'
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
@@ -7,12 +8,17 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   helperText?: React.ReactNode
   variant?: 'default' | 'dark'
   icon?: React.ReactNode
+  showPasswordToggle?: boolean
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, label, error, helperText, type = 'text', variant = 'default', icon, ...props }, ref) => {
+  ({ className, label, error, helperText, type = 'text', variant = 'default', icon, showPasswordToggle, ...props }, ref) => {
     const isDark = variant === 'dark'
-    
+    const [isVisible, setIsVisible] = useState(false)
+
+    const isPassword = type === 'password'
+    const currentType = isPassword && isVisible ? 'text' : type
+
     return (
       <div className="w-full">
         {label && (
@@ -33,11 +39,12 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             </div>
           )}
           <input
-            type={type}
+            type={currentType}
             ref={ref}
             className={cn(
               'w-full py-2.5 rounded-lg border transition-all duration-200',
-              icon ? 'pl-10 pr-4' : 'px-4',
+              icon ? 'pl-10' : 'px-4',
+              isPassword && showPasswordToggle ? 'pr-10' : 'pr-4',
               'focus:outline-none focus:ring-2 focus:border-transparent',
               'disabled:bg-slate-100 disabled:cursor-not-allowed',
               isDark ? [
@@ -53,6 +60,18 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             )}
             {...props}
           />
+          {isPassword && showPasswordToggle && (
+            <button
+              type="button"
+              onClick={() => setIsVisible(!isVisible)}
+              className={cn(
+                "absolute right-3 top-1/2 -translate-y-1/2 transition-colors",
+                isDark ? "text-slate-400 hover:text-white" : "text-slate-500 hover:text-slate-800"
+              )}
+            >
+              {isVisible ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+            </button>
+          )}
         </div>
         {error && (
           <p className="mt-1.5 text-sm text-red-600">{error}</p>

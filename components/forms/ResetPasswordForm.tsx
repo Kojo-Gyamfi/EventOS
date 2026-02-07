@@ -30,8 +30,8 @@ export default function ResetPasswordForm() {
 
   const onSubmit = async (data: ResetPasswordInput) => {
     if (!token) {
-        toast.error('Missing reset token. Please request a new link.')
-        return
+      toast.error('Missing reset token. Please request a new link.')
+      return
     }
 
     setIsLoading(true)
@@ -60,19 +60,19 @@ export default function ResetPasswordForm() {
 
   if (!token) {
     return (
-        <Card className="w-full max-w-md p-8 text-center bg-red-50 border-red-200">
-            <h2 className="text-xl font-bold text-red-700">Invalid Link</h2>
-            <p className="text-red-600 mt-2">
-                This password reset link is invalid or missing a token.
-            </p>
-            <div className="pt-4">
-                <Link href="/auth/forgot-password">
-                    <Button variant="outline" className="w-full">
-                        Request New Link
-                    </Button>
-                </Link>
-            </div>
-        </Card>
+      <Card className="w-full max-w-md p-8 text-center bg-red-50 border-red-200">
+        <h2 className="text-xl font-bold text-red-700">Invalid Link</h2>
+        <p className="text-red-600 mt-2">
+          This password reset link is invalid or missing a token.
+        </p>
+        <div className="pt-4">
+          <Link href="/auth/forgot-password">
+            <Button variant="outline" className="w-full">
+              Request New Link
+            </Button>
+          </Link>
+        </div>
+      </Card>
     )
   }
 
@@ -80,18 +80,18 @@ export default function ResetPasswordForm() {
     return (
       <Card className="w-full max-w-md p-8 text-center space-y-4">
         <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-            <Lock className="w-6 h-6 text-green-600" />
+          <Lock className="w-6 h-6 text-green-600" />
         </div>
         <h2 className="text-2xl font-bold text-slate-900">Password Reset!</h2>
         <p className="text-slate-600">
-            Your password has been successfully updated. You can now login with your new password.
+          Your password has been successfully updated. You can now login with your new password.
         </p>
         <div className="pt-4">
-            <Link href="/auth/login">
-                <Button className="w-full">
-                    Login Now
-                </Button>
-            </Link>
+          <Link href="/auth/login">
+            <Button className="w-full">
+              Login Now
+            </Button>
+          </Link>
         </div>
       </Card>
     )
@@ -109,29 +109,31 @@ export default function ResetPasswordForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 
         <Input
-            label="New Password"
-            type="password"
-            placeholder="••••••••"
-            icon={<Lock className="w-4 h-4" />}
-            error={errors.password?.message}
-            {...register('password')}
+          label="New Password"
+          type="password"
+          placeholder="••••••••"
+          showPasswordToggle
+          icon={<Lock className="w-4 h-4" />}
+          error={errors.password?.message}
+          {...register('password')}
         />
 
         <Input
-            label="Confirm New Password"
-            type="password"
-            placeholder="••••••••"
-            icon={<Lock className="w-4 h-4" />}
-            error={errors.confirmPassword?.message}
-            {...register('confirmPassword')}
+          label="Confirm New Password"
+          type="password"
+          placeholder="••••••••"
+          showPasswordToggle
+          icon={<Lock className="w-4 h-4" />}
+          error={errors.confirmPassword?.message}
+          {...register('confirmPassword')}
         />
 
         <Button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700"
-            isLoading={isLoading}
+          type="submit"
+          className="w-full bg-blue-600 hover:bg-blue-700"
+          isLoading={isLoading}
         >
-            Reset Password
+          Reset Password
         </Button>
       </form>
     </Card>
