@@ -64,3 +64,22 @@ export const resetPasswordSchema = z.object({
 })
 
 export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>
+
+// Profile validation schema
+export const profileSchema = z.object({
+  name: z.string().min(2, 'Name must be at least 2 characters'),
+})
+
+export type ProfileInput = z.infer<typeof profileSchema>
+
+// Change Password validation schema
+export const changePasswordSchema = z.object({
+  currentPassword: z.string().min(1, 'Current password is required'),
+  newPassword: z.string().min(6, 'New password must be at least 6 characters'),
+  confirmPassword: z.string(),
+}).refine((data) => data.newPassword === data.confirmPassword, {
+  message: "New passwords don't match",
+  path: ['confirmPassword'],
+})
+
+export type ChangePasswordInput = z.infer<typeof changePasswordSchema>
