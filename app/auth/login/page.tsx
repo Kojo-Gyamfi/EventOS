@@ -16,7 +16,6 @@ import Image from 'next/image'
 export default function LoginPage() {
   const router = useRouter()
   const { data: session, status } = useSession()
-  const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
   // Redirect to dashboard if already logged in
@@ -36,7 +35,6 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginInput) => {
     setIsLoading(true)
-    setError('')
 
     try {
       const result = await signIn('credentials', {
@@ -46,14 +44,14 @@ export default function LoginPage() {
       })
 
       if (result?.error) {
-        setError('Invalid email or password')
+        toast.error('Invalid email or password')
       } else {
+        toast.success("Logged in successfully");
         router.push('/dashboard')
-        toast("Log in Successfully");
         router.refresh()
       }
     } catch (err) {
-      setError('Something went wrong')
+      toast.error('Something went wrong')
     } finally {
       setIsLoading(false)
     }
@@ -92,11 +90,6 @@ export default function LoginPage() {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {error && (
-            <div className="p-3 rounded-lg bg-red-500/20 border border-red-500/50 text-red-200 text-sm">
-              {error}
-            </div>
-          )}
 
           <Input
             label="Email"

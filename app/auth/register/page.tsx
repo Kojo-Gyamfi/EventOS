@@ -16,7 +16,6 @@ import Image from 'next/image'
 export default function RegisterPage() {
   const router = useRouter()
   const { data: session, status } = useSession()
-  const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
   // Redirect to dashboard if already logged in
@@ -36,7 +35,6 @@ export default function RegisterPage() {
 
   const onSubmit = async (data: RegisterInput) => {
     setIsLoading(true)
-    setError('')
 
     try {
       const response = await fetch('/api/register', {
@@ -48,15 +46,15 @@ export default function RegisterPage() {
       const result = await response.json()
 
       if (!response.ok) {
-        setError(result.error || 'Something went wrong')
+        toast.error(result.error || 'Something went wrong')
         return
       }
 
       // Redirect to login after successful registration
+      toast.success("Registered successfully");
       router.push('/auth/login?registered=true')
-      toast("Register Successfully");
     } catch (err) {
-      setError('Something went wrong')
+      toast.error('Something went wrong')
     } finally {
       setIsLoading(false)
     }
@@ -94,11 +92,6 @@ export default function RegisterPage() {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {error && (
-            <div className="p-3 rounded-lg bg-red-500/20 border border-red-500/50 text-red-200 text-sm">
-              {error}
-            </div>
-          )}
 
           <Input
             label="Name"

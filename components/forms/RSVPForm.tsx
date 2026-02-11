@@ -19,7 +19,6 @@ interface RSVPFormProps {
 export default function RSVPForm({ eventId, eventName }: RSVPFormProps) {
   const router = useRouter()
   const [success, setSuccess] = useState(false)
-  const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
   const {
@@ -32,7 +31,6 @@ export default function RSVPForm({ eventId, eventName }: RSVPFormProps) {
 
   const onSubmit = async (data: RSVPFormInput) => {
     setIsLoading(true)
-    setError('')
 
     try {
       const response = await fetch('/api/rsvp', {
@@ -45,8 +43,7 @@ export default function RSVPForm({ eventId, eventName }: RSVPFormProps) {
         throw new Error('Failed to register')
       }
 
-      setSuccess(true)
-      toast("RSVP saved successfully")
+      toast.success("RSVP saved successfully")
 
       // Redirect and refresh after a short delay to allow success state to show
       setTimeout(() => {
@@ -54,7 +51,7 @@ export default function RSVPForm({ eventId, eventName }: RSVPFormProps) {
         router.refresh()
       }, 2000)
     } catch (err) {
-      setError('Something went wrong. Please try again.')
+      toast.error('Something went wrong. Please try again.')
     } finally {
       setIsLoading(false)
     }
@@ -83,12 +80,6 @@ export default function RSVPForm({ eventId, eventName }: RSVPFormProps) {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {error && (
-          <div className="p-3 rounded-lg bg-red-50 text-red-700 text-sm">
-            {error}
-          </div>
-        )}
-
         <Input
           label="Full Name"
           placeholder="Jane Doe"

@@ -11,6 +11,8 @@ import Input from '@/components/ui/Input'
 import Card from '@/components/ui/Card'
 import { User } from 'lucide-react'
 
+import { useSession } from 'next-auth/react'
+
 interface ProfileFormProps {
     initialData: {
         name: string | null
@@ -21,6 +23,7 @@ interface ProfileFormProps {
 export default function ProfileForm({ initialData }: ProfileFormProps) {
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
+    const { update } = useSession()
 
     const {
         register,
@@ -46,6 +49,9 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
             if (!response.ok) {
                 throw new Error('Failed to update profile')
             }
+
+            // Update client session
+            await update({ name: data.name })
 
             toast.success('Profile updated successfully')
             router.refresh()
