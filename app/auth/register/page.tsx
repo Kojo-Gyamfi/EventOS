@@ -10,16 +10,34 @@ import { registerSchema, type RegisterInput } from '@/lib/validators'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Card from '@/components/ui/Card'
-import { toast } from 'react-toastify';
-import Image from 'next/image'
+import { toast } from 'react-toastify'
+import { motion, AnimatePresence } from 'framer-motion'
+import { LayoutDashboard, User, Mail, Lock, ShieldCheck, ArrowLeft } from 'lucide-react'
+
+const container = {
+  hidden: { opacity: 0, scale: 0.95 },
+  show: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.22, 1, 0.36, 1],
+      staggerChildren: 0.08
+    }
+  }
+}
+
+const item = {
+  hidden: { opacity: 0, y: 15 },
+  show: { opacity: 1, y: 0 }
+}
 
 export default function RegisterPage() {
   const router = useRouter()
-  const { data: session, status } = useSession()
+  const { status } = useSession()
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  // Redirect to dashboard if already logged in
   useEffect(() => {
     if (status === 'authenticated') {
       router.push('/dashboard')
@@ -48,141 +66,143 @@ export default function RegisterPage() {
       const result = await response.json()
 
       if (!response.ok) {
-        setError(result.error || 'Something went wrong')
+        setError(result.error || 'Registration failed. Please try again.')
+        toast.error(result.error || 'Registration failed')
         return
       }
 
-      // Redirect to login after successful registration
+      toast.success("Account created! Please sign in.")
       router.push('/auth/login?registered=true')
-      toast("Register Successfully");
     } catch (err) {
-      setError('Something went wrong')
+      setError('An unexpected error occurred. Please try again.')
     } finally {
       setIsLoading(false)
     }
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400 flex items-center justify-center p-4">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full opacity-30">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-white rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute top-40 right-20 w-40 h-40 bg-blue-300 rounded-full blur-3xl animate-pulse delay-1000"></div>
-          <div className="absolute bottom-20 left-1/4 w-48 h-48 bg-white rounded-full blur-3xl animate-pulse delay-2000"></div>
-          <div className="absolute bottom-40 right-1/3 w-36 h-36 bg-blue-200 rounded-full blur-3xl animate-pulse delay-500"></div>
-        </div>
-        {/* Wave patterns */}
-        <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 320" preserveAspectRatio="none">
-          <path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,101.3C1248,85,1344,75,1392,69.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-        </svg>
-      </div>
+    <div className="min-h-screen relative flex items-center justify-center p-6 bg-slate-50 overflow-hidden">
+      {/* Background patterns */}
+      <div className="absolute inset-0 bg-dot-pattern opacity-40" />
+      <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-blue-400/10 rounded-full blur-[120px] -ml-40 -mt-40" />
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-indigo-400/10 rounded-full blur-[120px] -mr-40 -mb-40" />
 
-      <Card variant="dark" className="w-full max-w-md relative z-10">
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center mb-4">
-            <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
-              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            </div>
-          </div>
-          <h1 className="bg-gradient-to-r from-blue-700 to-sky-500 text-transparent bg-clip-text text-4xl font-extrabold mb-2">
-            EventOS
-          </h1>
-          <p className="text-slate-300">Create your account</p>
-        </div>
-
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {error && (
-            <div className="p-3 rounded-lg bg-red-500/20 border border-red-500/50 text-red-200 text-sm">
-              {error}
-            </div>
-          )}
-
-          <Input
-            label="Name"
-            type="text"
-            placeholder="John Doe"
-            variant="dark"
-            icon={
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-            }
-            error={errors.name?.message}
-            {...register('name')}
-          />
-
-          <Input
-            label="Email"
-            type="email"
-            placeholder="user@example.com"
-            variant="dark"
-            icon={
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-            }
-            error={errors.email?.message}
-            {...register('email')}
-          />
-
-          <Input
-            label="Password"
-            type="password"
-            placeholder="••••••••"
-            variant="dark"
-            showPasswordToggle
-            icon={
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
-            }
-            error={errors.password?.message}
-            {...register('password')}
-          />
-
-          <Input
-            label="Confirm Password"
-            type="password"
-            placeholder="••••••••"
-            variant="dark"
-            showPasswordToggle
-            icon={
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            }
-            error={errors.confirmPassword?.message}
-            {...register('confirmPassword')}
-          />
-
-          <Button
-            type="submit"
-            variant="primary"
-            className="w-full"
-            isLoading={isLoading}
-          >
-            Create Account
-          </Button>
-        </form>
-
-        <div className="mt-6 text-center text-sm">
-          <p className="text-slate-300">
-            Already have an account?{' '}
-            <Link href="/auth/login" className="text-blue-400 hover:text-blue-300 font-semibold transition-colors">
-              Sign in
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="w-full max-w-[540px] relative z-10"
+      >
+        <Card variant="glass" className="p-10 md:p-12 shadow-2xl border-white/40 shadow-slate-200/50 rounded-[40px]">
+          <motion.div variants={item} className="text-center mb-10">
+            <Link href="/" className="inline-flex items-center gap-3 group mb-8">
+              <div className="w-12 h-12 bg-linear-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg transition-transform group-hover:scale-110 group-hover:rotate-3">
+                <LayoutDashboard className="w-6 h-6 text-white" />
+              </div>
+              <span className="font-black text-3xl tracking-tight text-slate-900">
+                Event<span className="text-blue-600">OS</span>
+              </span>
             </Link>
-          </p>
-        </div>
+            <h1 className="text-3xl font-black text-slate-900 tracking-tight">Create Elite Account</h1>
+            <p className="text-slate-500 font-medium mt-2">Join the future of event orchestration.</p>
+          </motion.div>
 
-        <div className="mt-4 text-center">
-          <Link href="/" className="text-sm text-slate-400 hover:text-slate-300 transition-colors">
-            ← Back to home
+          <AnimatePresence mode="wait">
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="mb-6 p-4 rounded-2xl bg-rose-50 border border-rose-100 text-rose-600 text-sm font-bold flex items-center gap-3"
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0" />
+                {error}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <motion.div variants={item}>
+                <Input
+                  label="Full Name"
+                  type="text"
+                  placeholder="John Doe"
+                  icon={<User className="w-5 h-5" />}
+                  error={errors.name?.message}
+                  className="rounded-2xl"
+                  {...register('name')}
+                />
+              </motion.div>
+
+              <motion.div variants={item}>
+                <Input
+                  label="Enter Email"
+                  type="email"
+                  placeholder="name@company.com"
+                  icon={<Mail className="w-5 h-5" />}
+                  error={errors.email?.message}
+                  className="rounded-2xl"
+                  {...register('email')}
+                />
+              </motion.div>
+            </div>
+
+            <motion.div variants={item}>
+              <Input
+                label="Secure Password"
+                type="password"
+                placeholder="••••••••"
+                showPasswordToggle
+                icon={<Lock className="w-5 h-5" />}
+                error={errors.password?.message}
+                className="rounded-2xl"
+                {...register('password')}
+              />
+            </motion.div>
+
+            <motion.div variants={item}>
+              <Input
+                label="Confirm Security Password"
+                type="password"
+                placeholder="••••••••"
+                showPasswordToggle
+                icon={<ShieldCheck className="w-5 h-5" />}
+                error={errors.confirmPassword?.message}
+                className="rounded-2xl"
+                {...register('confirmPassword')}
+              />
+            </motion.div>
+
+            <motion.div variants={item} className="pt-4">
+              <Button
+                type="submit"
+                variant="primary"
+                className="w-full h-14 rounded-2xl text-lg shadow-xl shadow-blue-500/20"
+                isLoading={isLoading}
+              >
+                Create Account
+              </Button>
+            </motion.div>
+          </form>
+
+          <motion.div variants={item} className="mt-10 pt-8 border-t border-slate-100 text-center">
+            <p className="text-slate-500 font-medium text-sm">
+              Already have an elite account?{' '}
+              <Link href="/auth/login" className="text-blue-600 hover:text-blue-700 font-bold decoration-2 underline-offset-4 hover:underline transition-all">
+                Sign In
+              </Link>
+            </p>
+          </motion.div>
+        </Card>
+
+        <motion.div variants={item} className="mt-8 text-center">
+          <Link href="/" className="inline-flex items-center gap-2 text-slate-400 hover:text-slate-600 font-bold text-sm transition-colors group">
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+            Return to Headquarters
           </Link>
-        </div>
-      </Card>
+        </motion.div>
+      </motion.div>
     </div>
   )
 }

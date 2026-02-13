@@ -1,26 +1,25 @@
-
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { db } from '@/lib/db'
-import { CalendarDays, Users, TrendingUp, Plus } from 'lucide-react'
+import { CalendarDays, Users, TrendingUp, Plus, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 import EventCard from '@/components/dashboard/EventCard'
+import { cn } from '@/lib/utils'
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions)
-  
+
   if (!session?.user) return null
 
   // Fetch user stats with more granular data
   const events = await db.event.findMany({
     where: { userId: session.user.id },
     include: {
-        rsvps: true, // Fetch all RSVPs to calculate specific stats
-        _count: {
-            select: { rsvps: true }
-        }
+      _count: {
+        select: { rsvps: true }
+      }
     },
     orderBy: { createdAt: 'desc' },
   })
@@ -29,86 +28,98 @@ export default async function DashboardPage() {
   const totalEvents = await db.event.count({ where: { userId: session.user.id } })
   const totalRSVPs = events.reduce((acc, curr) => acc + (curr._count?.rsvps || 0), 0)
 
-  // Recent 5 events for the list
-  const recentEvents = events.slice(0, 5)
+  // Recent 4 events for the list
+  const recentEvents = events.slice(0, 4)
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-12">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900">Dashboard</h1>
-          <p className="text-slate-500">Welcome back, {session.user.name}</p>
+          <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
+            Dashboard
+          </h1>
+          <p className="text-lg text-slate-500 mt-2 font-medium">
+            Welcome back, <span className="text-blue-600 font-bold">{session.user.name}</span>. Here's what's happening.
+          </p>
         </div>
         <Link href="/dashboard/events/new">
-          <Button className="gap-2 shadow-blue-500/25">
+          <Button className="gap-2 shadow-2xl shadow-blue-500/20 px-8 py-7 rounded-2xl" variant="primary">
             <Plus className="w-5 h-5" />
-            Create New Event
+            <span className="text-lg">Create New Event</span>
           </Button>
         </Link>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card variant="elevated" className="flex items-center gap-4 border-l-4 border-blue-500">
-           <div className="p-3 bg-blue-50 rounded-lg text-blue-600">
-             <CalendarDays className="w-6 h-6" />
-           </div>
-           <div>
-             <p className="text-sm font-medium text-slate-500">Total Events</p>
-             <p className="text-2xl font-bold text-slate-900">{totalEvents}</p>
-           </div>
-        </Card>
-        
-        <Card variant="elevated" className="flex items-center gap-4 border-l-4 border-emerald-500">
-           <div className="p-3 bg-emerald-50 rounded-lg text-emerald-600">
-             <Users className="w-6 h-6" />
-           </div>
-           <div>
-             <p className="text-sm font-medium text-slate-500">Total RSVPs</p>
-             <p className="text-2xl font-bold text-slate-900">{totalRSVPs}</p>
-           </div>
-        </Card>
-
-        <Card variant="elevated" className="flex items-center gap-4 border-l-4 border-violet-500">
-           <div className="p-3 bg-violet-50 rounded-lg text-violet-600">
-             <TrendingUp className="w-6 h-6" />
-           </div>
-           <div>
-             <p className="text-sm font-medium text-slate-500">Active Now</p>
-             <p className="text-2xl font-bold text-slate-900">
-                {events.filter((e) => new Date(e.date) > new Date()).length}
-             </p>
-           </div>
-        </Card>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {[
+          {
+            label: 'Total Events',
+            value: totalEvents,
+            icon: CalendarDays,
+            bg: 'bg-blue-50',
+            text: 'text-blue-600',
+          },
+          {
+            label: 'Total RSVPs',
+            value: totalRSVPs,
+            icon: Users,
+            bg: 'bg-indigo-50',
+            text: 'text-indigo-600',
+          },
+          {
+            label: 'Active Events',
+            value: events.filter((e) => new Date(e.date) > new Date()).length,
+            icon: TrendingUp,
+            bg: 'bg-emerald-50',
+            text: 'text-emerald-600',
+          }
+        ].map((stat) => (
+          <Card
+            key={stat.label}
+            variant="default"
+            className={cn("relative overflow-hidden border-0 shadow-xl shadow-slate-200/50 p-8 rounded-[32px] group hover:-translate-y-1 transition-transform duration-300")}
+          >
+            <div className="flex items-center gap-6 relative z-10">
+              <div className={cn("w-16 h-16 rounded-3xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3", stat.bg, stat.text)}>
+                <stat.icon className="w-8 h-8" />
+              </div>
+              <div>
+                <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">{stat.label}</p>
+                <p className="text-4xl font-black text-slate-900 mt-1">{stat.value}</p>
+              </div>
+            </div>
+            <div className={cn("absolute -bottom-6 -right-6 w-32 h-32 rounded-full opacity-10 blur-3xl", stat.bg)} />
+          </Card>
+        ))}
       </div>
 
-
-
       {/* Recent Events Section */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-           <h2 className="text-xl font-bold text-slate-900">Recent Events</h2>
-           <Link href="/dashboard/events" className="text-blue-600 hover:text-blue-700 font-medium text-sm">
-             View All
-           </Link>
+      <div className="space-y-6">
+        <div className="flex items-center justify-between px-2">
+          <h2 className="text-2xl font-black text-slate-900 tracking-tight">Recent Events</h2>
+          <Link href="/dashboard/events" className="group flex items-center gap-2 text-blue-600 hover:text-blue-700 font-bold text-sm bg-blue-50 py-2 px-4 rounded-xl transition-all">
+            View All
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </Link>
         </div>
 
         {recentEvents.length === 0 ? (
-          <Card className="text-center py-12 bg-slate-50 border-dashed border-2 border-slate-200">
-             <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
-                <CalendarDays className="w-8 h-8 text-slate-300" />
-             </div>
-             <h3 className="text-lg font-medium text-slate-900 mb-1">No events yet</h3>
-             <p className="text-slate-500 mb-6">Create your first event to get started</p>
-             <Link href="/dashboard/events/new">
-               <Button variant="outline">Create Event</Button>
-             </Link>
+          <Card className="flex flex-col items-center justify-center py-24 glass-effect rounded-[40px] border-2 border-dashed border-slate-200">
+            <div className="w-24 h-24 bg-blue-50 text-blue-400 rounded-[32px] flex items-center justify-center mb-6 shadow-inner">
+              <CalendarDays className="w-10 h-10" />
+            </div>
+            <h3 className="text-2xl font-bold text-slate-900 mb-2">No events found</h3>
+            <p className="text-slate-500 mb-10 max-w-sm text-center font-medium">Ready to host your next big thing? Start by creating your first event today.</p>
+            <Link href="/dashboard/events/new">
+              <Button variant="primary" className="rounded-2xl px-8 shadow-xl shadow-blue-500/20">Create Your First Event</Button>
+            </Link>
           </Card>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {recentEvents.map((event) => (
-               <EventCard key={event.id} event={event} />
+              <EventCard key={event.id} event={event} />
             ))}
           </div>
         )}

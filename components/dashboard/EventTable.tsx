@@ -18,67 +18,72 @@ interface EventTableProps {
 
 export default function EventTable({ events, onDelete }: EventTableProps) {
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Event Name</TableHead>
-          <TableHead>Date</TableHead>
-          <TableHead>Location</TableHead>
-          <TableHead>RSVPs</TableHead>
-          <TableHead className="text-right">Actions</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {events.map((event) => (
-          <TableRow key={event.id}>
-            <TableCell className="font-medium">
-              <div className="flex flex-col">
-                <span className="text-slate-900 font-semibold">{event.title}</span>
-                <span className="text-slate-500 text-xs">/{event.slug}</span>
-              </div>
-            </TableCell>
-            <TableCell>{formatDate(event.date)}</TableCell>
-            <TableCell>{event.location || 'Online'}</TableCell>
-            <TableCell>
-              <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                {event._count?.rsvps || 0}
-              </div>
-            </TableCell>
-            <TableCell className="text-right">
-              <div className="flex items-center justify-end gap-2">
-                <Link href={`/events/${event.slug}`} target="_blank">
-                  <Button variant="ghost" size="sm" className="h-10 w-10 p-0" title="View Public Page">  
-                    <Eye className="w-5 h-5" />
-                  </Button>
-                </Link>
-                <Link href={`/dashboard/events/${event.id}`}>
-                  <Button variant="ghost" size="sm" className="h-10 w-10 p-0" title="Edit Event">
-                    <Edit className="w-5 h-5" />
-                  </Button>
-                </Link>
-                <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    className="h-10 w-10 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
-                    onClick={() => {
-                      onDelete(event.id)
-                    }}
-                    title="Delete Event"
-                >
-                  <Trash2 className="w-5 h-5" />
-                </Button>
-              </div>
-            </TableCell>
+    <div className="overflow-x-auto">
+      <Table>
+        <TableHeader className="bg-slate-50/50">
+          <TableRow className="border-b border-slate-100 hover:bg-transparent">
+            <TableHead className="py-5 px-6 text-slate-400 font-bold uppercase tracking-wider text-[10px]">Event Details</TableHead>
+            <TableHead className="py-5 px-6 text-slate-400 font-bold uppercase tracking-wider text-[10px]">Date & Time</TableHead>
+            <TableHead className="py-5 px-4 text-slate-400 font-bold uppercase tracking-wider text-[10px]">Location</TableHead>
+            <TableHead className="py-5 px-4 text-slate-400 font-bold uppercase tracking-wider text-[10px]">Attendees</TableHead>
+            <TableHead className="py-5 px-6 text-right text-slate-400 font-bold uppercase tracking-wider text-[10px]">Actions</TableHead>
           </TableRow>
-        ))}
-        {events.length === 0 && (
-            <TableRow>
-                <TableCell colSpan={5} className="text-center py-8 text-slate-500">
-                    No events found
-                </TableCell>
+        </TableHeader>
+        <TableBody>
+          {events.map((event) => (
+            <TableRow key={event.id} className="group border-b border-slate-50 hover:bg-slate-50/50 transition-colors">
+              <TableCell className="py-5 px-6">
+                <div className="flex flex-col">
+                  <span className="text-slate-900 font-bold group-hover:text-blue-600 transition-colors">{event.title}</span>
+                  <span className="text-slate-400 text-xs mt-0.5 font-medium">/{event.slug}</span>
+                </div>
+              </TableCell>
+              <TableCell className="py-5 px-6 font-medium text-slate-600">
+                {formatDate(event.date)}
+              </TableCell>
+              <TableCell className="py-5 px-4 font-medium text-slate-500">
+                {event.location || (
+                  <span className="text-blue-500 bg-blue-50 px-2 py-1 rounded-lg text-xs font-bold uppercase tracking-tight">Virtual</span>
+                )}
+              </TableCell>
+              <TableCell className="py-5 px-4">
+                <div className="inline-flex items-center px-3 py-1 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200 shadow-xs">
+                  {event._count?.rsvps || 0} RSVPs
+                </div>
+              </TableCell>
+              <TableCell className="py-5 px-6 text-right">
+                <div className="flex items-center justify-end gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Link href={`/events/${event.slug}`} target="_blank">
+                    <Button variant="secondary" size="sm" className="h-9 w-9 p-0 rounded-xl bg-slate-100 border-0 hover:bg-blue-100 hover:text-blue-600 transition-all">
+                      <Eye className="w-4 h-4" />
+                    </Button>
+                  </Link>
+                  <Link href={`/dashboard/events/${event.id}`}>
+                    <Button variant="secondary" size="sm" className="h-9 w-9 p-0 rounded-xl bg-slate-100 border-0 hover:bg-indigo-100 hover:text-indigo-600 transition-all">
+                      <Edit className="w-4 h-4" />
+                    </Button>
+                  </Link>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className="h-9 w-9 p-0 rounded-xl bg-slate-100 border-0 text-rose-500 hover:bg-rose-100 hover:text-rose-600 transition-all"
+                    onClick={() => onDelete(event.id)}
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
+              </TableCell>
             </TableRow>
-        )}
-      </TableBody>
-    </Table>
+          ))}
+          {events.length === 0 && (
+            <TableRow>
+              <TableCell colSpan={5} className="text-center py-20 text-slate-500 font-medium">
+                No events discovered yet.
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </div>
   )
 }

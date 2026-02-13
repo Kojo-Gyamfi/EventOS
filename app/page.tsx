@@ -1,105 +1,173 @@
-import Image from "next/image";
-import Link from "next/link";
+'use client'
+
+import Image from "next/image"
+import Link from "next/link"
+import { motion } from "framer-motion"
+import { Calendar, TrendingUp, Users, ArrowRight, CheckCircle2 } from "lucide-react"
+import Button from "@/components/ui/Button"
+import Card from "@/components/ui/Card"
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15
+    }
+  }
+}
+
+const item = {
+  hidden: { opacity: 0, y: 30 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1] as any
+    }
+  }
+}
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen w-full overflow-hidden flex items-center justify-center bg-blue-50">
+    <main className="relative min-h-screen w-full flex flex-col bg-slate-50 overflow-x-hidden pt-20">
+      {/* Sticky Header */}
+      <header className="fixed top-0 left-0 right-0 z-50 h-20 bg-slate-50/80 backdrop-blur-md border-b border-slate-200/50">
+        <div className="max-w-6xl mx-auto h-full px-6 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-linear-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+              <Calendar className="w-5 h-5 text-white" />
+            </div>
+            <span className="font-extrabold text-2xl tracking-tight text-slate-900">
+              Event<span className="text-blue-600">OS</span>
+            </span>
+          </div>
 
-      
-      {/* Hero Background Illustration */}
-      <div className="fixed inset-0 w-screen h-screen z-0">
-        <Image
-          src="/hero-background.png"
-          alt="EventOS Event Management Background"
-          fill
-          className="object-cover object-center w-full h-full"
-          priority
-          quality={100}
-        />
-        {/* Overlay gradient to ensure text readability */}
-        <div className="absolute inset-0 bg-blue-900/10 mix-blend-overlay" />
-      </div>
+          <Link href="/auth/login">
+            <Button variant="ghost" className="font-bold text-slate-600 hover:text-blue-600">
+              Sign In
+            </Button>
+          </Link>
+        </div>
+      </header>
 
+      {/* Premium Background Pattern */}
+      <div className="fixed inset-0 bg-dot-pattern opacity-40 pointer-events-none" />
 
-      {/* Central Card */}
-      <div className="relative z-10 w-full max-w-4xl mx-4 mt-5">
-        <div className="bg-white/85 backdrop-blur-xl border border-white/40 p-7 md:p-12 rounded-3xl shadow-2xl text-center space-y-8 transform transition-all hover:scale-[1.01] duration-500">
+      {/* Decorative Gradients */}
+      <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="fixed bottom-0 right-1/4 w-[500px] h-[500px] bg-indigo-400/10 rounded-full blur-[120px] pointer-events-none" />
 
-          
-          {/* Logo & Branding */}
-          <div className="space-y-2">
-            <h1 className="text-5xl font-extrabold tracking-tight">
-              <span className="bg-gradient-to-r from-blue-700 to-sky-500 bg-clip-text text-transparent">
-                EventOS
-              </span>
+      {/* Hero Section */}
+      <section className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 py-10 pb-20">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="max-w-6xl w-full text-center space-y-12"
+        >
+          {/* Logo Badge */}
+          <motion.div variants={item} className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-md border border-slate-200 rounded-2xl shadow-sm">
+            <div className="w-6 h-6 bg-blue-600 rounded-lg flex items-center justify-center text-[10px] text-white font-bold">OS</div>
+            <span className="text-sm font-bold text-slate-900">EventOS 2.0 is live</span>
+          </motion.div>
+
+          {/* Main Heading */}
+          <motion.div variants={item} className="space-y-6">
+            <h1 className="text-6xl md:text-8xl font-black text-slate-900 tracking-tight leading-[1.1]">
+              Orchestrate <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-indigo-600">Unforgettable</span> <br className="hidden md:block" />
+              Experiences.
             </h1>
-            <p className="text-slate-600 text-lg font-medium">
-              Seamless Event Management
+            <p className="text-xl md:text-2xl text-slate-500 max-w-3xl mx-auto font-medium leading-relaxed">
+              The all-in-one platform to plan, organize, and execute professional events with elite analytics and seamless collaboration.
             </p>
-          </div>
+          </motion.div>
 
-          <p className="text-slate-500 leading-relaxed text-lg max-w-2xl mx-auto">
-            The all-in-one platform to plan, organize, and execute unforgettable events with analytics-driven insights.
-          </p>
-
-          {/* Feature Highlights */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
-            <div className="space-y-2">
-              <div className="w-12 h-12 mx-auto bg-blue-100 rounded-lg flex items-center justify-center">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <h3 className="font-bold text-slate-800">Smart Planning</h3>
-              <p className="text-sm text-slate-600">Create and manage events with intuitive scheduling tools</p>
-            </div>
-
-            <div className="space-y-2">
-              <div className="w-12 h-12 mx-auto bg-blue-100 rounded-lg flex items-center justify-center">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              </div>
-              <h3 className="font-bold text-slate-800">Real-Time Analytics</h3>
-              <p className="text-sm text-slate-600">Track attendance, engagement, and performance metrics</p>
-            </div>
-
-            <div className="space-y-2">
-              <div className="w-12 h-12 mx-auto bg-blue-100 rounded-lg flex items-center justify-center">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <h3 className="font-bold text-slate-800">Team Collaboration</h3>
-              <p className="text-sm text-slate-600">Coordinate with your team in real-time effortlessly</p>
-            </div>
-          </div>
-
-    
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
-            <Link
-              href="/auth/login"
-              className="px-8 py-3 rounded-full border-2 border-blue-600 text-blue-700 font-bold hover:bg-blue-50 transition-colors duration-300 focus:ring-4 focus:ring-blue-200"
-            >
-              Log In
+          <motion.div variants={item} className="flex flex-col sm:flex-row items-center justify-center gap-5 pt-4">
+            <Link href="/auth/register">
+              <Button variant="primary" className="h-16 px-10 rounded-2xl text-lg shadow-2xl shadow-blue-500/25 gap-3">
+                Start Hosting Now
+                <ArrowRight className="w-5 h-5" />
+              </Button>
             </Link>
-            <Link
-              href="/auth/register"
-              className="px-8 py-3 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-0.5 transition-all duration-300 focus:ring-4 focus:ring-blue-300"
-            >
-              Get Started Free
+            <Link href="/auth/login">
+              <Button variant="outline" className="h-16 px-10 rounded-2xl text-lg border-2 bg-white/50 backdrop-blur-sm">
+                Sign In
+              </Button>
             </Link>
-          </div>
+          </motion.div>
+
+          {/* Visual Divider / Social Proof */}
+          <motion.div variants={item} className="pt-12 text-slate-400 text-sm font-bold uppercase tracking-widest flex flex-wrap justify-center items-center gap-8">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+              Trusted by Creative Event Organizers
+            </div>
+            <div className="hidden sm:block w-px h-4 bg-slate-200" />
+            <div className="flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-blue-500" />
+              Elite Analytics Included
+            </div>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* Features Section */}
+      <section className="relative z-10 px-6 pb-10">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          >
+            {[
+              {
+                title: 'Smart Planning',
+                desc: 'Create and manage events with intuitive scheduling tools and real-time adjustments.',
+                icon: Calendar,
+                color: 'blue'
+              },
+              {
+                title: 'Elite Analytics',
+                desc: 'Track attendance, engagement, and performance metrics with precision dashboards.',
+                icon: TrendingUp,
+                color: 'indigo'
+              },
+              {
+                title: 'Seamless Collaboration',
+                desc: 'Coordinate with your team in real-time effortlessly with shared permissions.',
+                icon: Users,
+                color: 'emerald'
+              }
+            ].map((f, i) => (
+              <Card
+                key={i}
+                className="group relative overflow-hidden p-10 border-0 shadow-2xl shadow-slate-200/50 rounded-[40px] hover:-translate-y-2 transition-transform duration-500"
+              >
+                <div className={`w-16 h-16 rounded-[24px] bg-${f.color}-50 flex items-center justify-center text-${f.color}-600 mb-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-inner`}>
+                  <f.icon className="w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-4">{f.title}</h3>
+                <p className="text-slate-500 font-medium leading-relaxed">{f.desc}</p>
+                <div className={`absolute -bottom-6 -right-6 w-32 h-32 rounded-full bg-${f.color}-100 opacity-20 blur-3xl`} />
+              </Card>
+            ))}
+          </motion.div>
         </div>
-        
-        {/* Footer/Copyright hint */}
-        <div className="mt-8 text-center">
-            <p className="text-white/80 text-sm font-medium drop-shadow-md">
-                © {new Date().getFullYear()} EventOS Inc.
-            </p>
+      </section>
+
+      {/* Footer */}
+      <footer className="relative z-10 px-6 py-12 border-t border-slate-200/60 bg-white/30 backdrop-blur-sm">
+        <div className="max-w-6xl mx-auto flex items-center justify-center gap-8">
+          <p className="text-slate-400 text-sm font-bold text-center">
+            © {new Date().getFullYear()} EventOS Inc.
+          </p>
         </div>
-      </div>
+      </footer>
     </main>
-  );
+  )
 }
