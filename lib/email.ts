@@ -37,13 +37,6 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
                 </a>
               </div>
               
-              <p style="color: #666; font-size: 14px;">
-                Or copy and paste this link into your browser:
-              </p>
-              <p style="color: #667eea; font-size: 14px; word-break: break-all; background: #f5f5f5; padding: 12px; border-radius: 4px;">
-                ${resetLink}
-              </p>
-              
               <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 30px 0;">
               
               <p style="color: #999; font-size: 13px; margin-bottom: 5px;">
