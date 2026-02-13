@@ -79,11 +79,11 @@ export default async function DashboardPage() {
           <Card
             key={stat.label}
             variant="default"
-            className={cn("relative overflow-hidden border-0 shadow-xl shadow-slate-200/50 p-8 rounded-[32px] group hover:-translate-y-1 transition-transform duration-300")}
+            className={cn("relative overflow-hidden border-0 shadow-xl shadow-slate-200/70 p-5 rounded-[32px] group hover:-translate-y-1 transition-transform duration-300")}
           >
             <div className="flex items-center gap-6 relative z-10">
-              <div className={cn("w-16 h-16 rounded-3xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3", stat.bg, stat.text)}>
-                <stat.icon className="w-8 h-8" />
+              <div className={cn("w-5 h-5 rounded-3xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3", stat.bg, stat.text)}>
+                <stat.icon className="w-6 h-6" />
               </div>
               <div>
                 <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">{stat.label}</p>
