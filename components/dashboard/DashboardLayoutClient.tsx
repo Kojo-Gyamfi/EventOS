@@ -73,7 +73,7 @@ export default function DashboardLayoutClient({ children }: { children: React.Re
           {/* Navigation */}
           <nav className="flex-1 p-6 space-y-8 overflow-y-auto">
             <div>
-              <Link href="/dashboard/events/new">
+              <Link href="/dashboard/events/new" onClick={() => setIsSidebarOpen(false)}>
                 <Button className="w-full shadow-xl shadow-blue-500/20 rounded-2xl py-6" variant="primary">
                   <Plus className="w-5 h-5 mr-1" />
                   Create Event
@@ -91,6 +91,7 @@ export default function DashboardLayoutClient({ children }: { children: React.Re
                   <Link
                     key={item.name}
                     href={item.href}
+                    onClick={() => setIsSidebarOpen(false)}
                     className={cn(
                       "group flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-2xl transition-all duration-200 relative",
                       isActive
@@ -115,7 +116,13 @@ export default function DashboardLayoutClient({ children }: { children: React.Re
 
           {/* User Profile */}
           <div className="p-6 border-t border-slate-100 bg-slate-50/50">
-            <div className="flex items-center gap-3 px-2 py-3 mb-4 group cursor-pointer" onClick={() => router.push('/dashboard/profile')}>
+            <div
+              className="flex items-center gap-3 px-2 py-3 mb-4 group cursor-pointer"
+              onClick={() => {
+                setIsSidebarOpen(false)
+                router.push('/dashboard/profile')
+              }}
+            >
               <div className="relative">
                 <div className="w-10 h-10 rounded-xl bg-linear-to-br from-blue-100 to-indigo-100 flex items-center justify-center text-blue-700 font-bold text-lg border border-white shadow-sm transition-transform group-hover:scale-105">
                   {session?.user?.name?.[0] || 'U'}
