@@ -79,7 +79,7 @@ export default async function DashboardPage() {
           <Card
             key={stat.label}
             variant="default"
-            className={cn("relative overflow-hidden border-0 shadow-xl shadow-slate-200/70 p-5 rounded-[32px] group hover:-translate-y-1 transition-transform duration-300")}
+            className={cn("relative overflow-hidden border-0 shadow-xl shadow-slate-200/70 p-4 rounded-[30px] group hover:-translate-y-1 transition-transform duration-300")}
           >
             <div className="flex items-center gap-6 relative z-10">
               <div className={cn("w-5 h-5 rounded-3xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3", stat.bg, stat.text)}>
@@ -87,10 +87,10 @@ export default async function DashboardPage() {
               </div>
               <div>
                 <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">{stat.label}</p>
-                <p className="text-4xl font-black text-slate-900 mt-1">{stat.value}</p>
+                <p className="text-3xl font-black text-slate-900 mt-1">{stat.value}</p>
               </div>
             </div>
-            <div className={cn("absolute -bottom-6 -right-6 w-32 h-32 rounded-full opacity-10 blur-3xl", stat.bg)} />
+            <div className={cn("absolute -bottom-6 -right-6 w-24 h-24 rounded-full opacity-10 blur-3xl", stat.bg)} />
           </Card>
         ))}
       </div>
