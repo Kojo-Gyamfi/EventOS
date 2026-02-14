@@ -57,25 +57,27 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
     }
 
     return (
-        <Card className="p-6">
-            <div className="flex items-center gap-2 mb-6">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                    <User className="w-5 h-5 text-blue-600" />
+        <Card variant="dark-glass" className="p-8 border-white/5">
+            <div className="flex items-center gap-2 mb-8">
+                <div className="p-2.5 bg-blue-500/10 border border-blue-500/20 rounded-xl">
+                    <User className="w-5 h-5 text-blue-500" />
                 </div>
-                <h2 className="text-xl font-bold text-slate-900">Personal Information</h2>
+                <h2 className="text-xl font-bold text-white">Personal Information</h2>
             </div>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                 <Input
-                    label="Email Address (Read-only)"
+                    label="Account Email (Protected)"
                     value={initialData.email}
                     disabled
-                    className="bg-slate-50"
+                    variant="dark"
+                    className="cursor-not-allowed opacity-70"
                 />
 
                 <Input
-                    label="Display Name"
+                    label="Elite Identifier"
                     placeholder="Your Name"
+                    variant="dark"
                     error={errors.name?.message}
                     {...register('name')}
                 />

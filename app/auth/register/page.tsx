@@ -82,11 +82,29 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center p-6 bg-slate-50 overflow-hidden">
-      {/* Background patterns */}
-      <div className="absolute inset-0 bg-dot-pattern opacity-40" />
-      <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-blue-400/10 rounded-full blur-[120px] -ml-40 -mt-40" />
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-indigo-400/10 rounded-full blur-[120px] -mr-40 -mb-40" />
+    <div className="min-h-screen relative flex items-center justify-center p-6 bg-[#030712] overflow-hidden">
+      {/* Mesh Gradients */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          animate={{
+            scale: [1, 1.3, 1],
+            x: [0, -50, 0],
+            y: [0, 40, 0],
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-[15%] -right-[10%] w-[70%] h-[70%] bg-blue-600/15 rounded-full blur-[140px]"
+        />
+        <motion.div
+          animate={{
+            scale: [1.3, 1, 1.3],
+            x: [0, 60, 0],
+            y: [0, -30, 0],
+          }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          className="absolute -bottom-[10%] -left-[10%] w-[60%] h-[60%] bg-indigo-600/15 rounded-full blur-[140px]"
+        />
+        <div className="absolute inset-0 bg-dot-pattern opacity-10" />
+      </div>
 
       <AnimatePresence>
         {isLoading && (
@@ -107,18 +125,18 @@ export default function RegisterPage() {
         animate="show"
         className="w-full max-w-[540px] relative z-10"
       >
-        <Card variant="glass" className="p-10 md:p-12 shadow-2xl border-white/40 shadow-slate-200/50 rounded-[40px]">
+        <Card variant="dark-glass" className="p-10 md:p-12 border-white/10 rounded-[40px]">
           <motion.div variants={item} className="text-center mb-10">
             <Link href="/" className="inline-flex items-center gap-3 group mb-8">
-              <div className="w-12 h-12 bg-linear-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg transition-transform group-hover:scale-110 group-hover:rotate-3">
+              <div className="w-12 h-12 bg-linear-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-[0_8px_20px_-4px_rgba(59,130,246,0.4)] transition-transform group-hover:scale-110 group-hover:rotate-3">
                 <LayoutDashboard className="w-6 h-6 text-white" />
               </div>
-              <span className="font-black text-3xl tracking-tight text-slate-900">
-                Event<span className="text-blue-600">OS</span>
+              <span className="font-black text-3xl tracking-tight text-white">
+                Event<span className="text-blue-500">OS</span>
               </span>
             </Link>
-            <h1 className="text-3xl font-black text-slate-900 tracking-tight">Create Elite Account</h1>
-            <p className="text-slate-500 font-medium mt-2">Join the future of event orchestration.</p>
+            <h1 className="text-3xl font-black text-white tracking-tight">Create Elite Account</h1>
+            <p className="text-slate-400 font-medium mt-2">Join the future of event orchestration.</p>
           </motion.div>
 
           <AnimatePresence mode="wait">
@@ -127,7 +145,7 @@ export default function RegisterPage() {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                className="mb-6 p-4 rounded-2xl bg-rose-50 border border-rose-100 text-rose-600 text-sm font-bold flex items-center gap-3"
+                className="mb-6 p-4 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm font-bold flex items-center gap-3"
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0" />
                 {error}
@@ -141,6 +159,7 @@ export default function RegisterPage() {
                 <Input
                   label="Full Name"
                   type="text"
+                  variant="dark"
                   placeholder="John Doe"
                   icon={<User className="w-5 h-5" />}
                   error={errors.name?.message}
@@ -153,6 +172,7 @@ export default function RegisterPage() {
                 <Input
                   label="Enter Email"
                   type="email"
+                  variant="dark"
                   placeholder="name@company.com"
                   icon={<Mail className="w-5 h-5" />}
                   error={errors.email?.message}
@@ -166,6 +186,7 @@ export default function RegisterPage() {
               <Input
                 label="Secure Password"
                 type="password"
+                variant="dark"
                 placeholder="••••••••"
                 showPasswordToggle
                 icon={<Lock className="w-5 h-5" />}
@@ -179,6 +200,7 @@ export default function RegisterPage() {
               <Input
                 label="Confirm Security Password"
                 type="password"
+                variant="dark"
                 placeholder="••••••••"
                 showPasswordToggle
                 icon={<ShieldCheck className="w-5 h-5" />}
@@ -200,10 +222,10 @@ export default function RegisterPage() {
             </motion.div>
           </form>
 
-          <motion.div variants={item} className="mt-10 pt-8 border-t border-slate-100 text-center">
+          <motion.div variants={item} className="mt-10 pt-8 border-t border-white/5 text-center">
             <p className="text-slate-500 font-medium text-sm">
               Already have an elite account?{' '}
-              <Link href="/auth/login" className="text-blue-600 hover:text-blue-700 font-bold decoration-2 underline-offset-4 hover:underline transition-all">
+              <Link href="/auth/login" className="text-blue-500 hover:text-blue-400 font-bold decoration-2 underline-offset-4 hover:underline transition-all">
                 Sign In
               </Link>
             </p>
@@ -211,7 +233,7 @@ export default function RegisterPage() {
         </Card>
 
         <motion.div variants={item} className="mt-8 text-center">
-          <Link href="/" className="inline-flex items-center gap-2 text-slate-400 hover:text-slate-600 font-bold text-sm transition-colors group">
+          <Link href="/" className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-300 font-bold text-sm transition-colors group">
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
             Return to Headquarters
           </Link>

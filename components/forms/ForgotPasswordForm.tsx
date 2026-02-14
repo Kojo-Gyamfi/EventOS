@@ -52,18 +52,18 @@ export default function ForgotPasswordForm() {
 
   if (success) {
     return (
-      <Card variant="glass" className="p-10 md:p-12 text-center space-y-6 shadow-2xl border-white/40 rounded-[40px]">
+      <Card variant="dark-glass" className="p-10 md:p-12 text-center space-y-6 border-white/10 rounded-[40px]">
         <motion.div
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="w-20 h-20 bg-emerald-50 rounded-[32px] flex items-center justify-center mx-auto shadow-inner"
+          className="w-20 h-20 bg-emerald-500/10 border border-emerald-500/20 rounded-[32px] flex items-center justify-center mx-auto"
         >
-          <CheckCircle2 className="w-10 h-10 text-emerald-600" />
+          <CheckCircle2 className="w-10 h-10 text-emerald-500" />
         </motion.div>
 
         <div className="space-y-2">
-          <h2 className="text-3xl font-black text-slate-900 tracking-tight">Transmission Successful</h2>
-          <p className="text-slate-500 font-medium">
+          <h2 className="text-3xl font-black text-white tracking-tight">Transmission Successful</h2>
+          <p className="text-slate-400 font-medium">
             Elite recovery instructions have been sent to your primary email address.
           </p>
         </div>
@@ -80,10 +80,10 @@ export default function ForgotPasswordForm() {
   }
 
   return (
-    <Card variant="glass" className="p-10 md:p-12 shadow-2xl border-white/40 shadow-slate-200/50 rounded-[40px]">
+    <Card variant="dark-glass" className="p-10 md:p-12 border-white/10 rounded-[40px]">
       <div className="text-center mb-10">
-        <h1 className="text-3xl font-black text-slate-900 tracking-tight">Recover Access</h1>
-        <p className="text-slate-500 font-medium mt-2">
+        <h1 className="text-3xl font-black text-white tracking-tight">Recover Access</h1>
+        <p className="text-slate-400 font-medium mt-2">
           Enter your registered email to initiate the secure recovery sequence.
         </p>
       </div>
@@ -91,6 +91,7 @@ export default function ForgotPasswordForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
         <Input
           label="Enter Registered Email"
+          variant="dark"
           placeholder="name@company.com"
           type="email"
           icon={<Mail className="w-5 h-5" />}

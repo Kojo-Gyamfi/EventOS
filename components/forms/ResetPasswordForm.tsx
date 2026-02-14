@@ -60,15 +60,15 @@ export default function ResetPasswordForm() {
 
   if (!token) {
     return (
-      <Card className="w-full max-w-md p-8 text-center bg-red-50 border-red-200">
-        <h2 className="text-xl font-bold text-red-700">Invalid Link</h2>
-        <p className="text-red-600 mt-2">
-          This password reset link is invalid or missing a token.
+      <Card variant="dark-glass" className="w-full max-w-md p-10 text-center border-rose-500/20 bg-rose-500/10">
+        <h2 className="text-2xl font-black text-rose-500 tracking-tight">Access Suspended</h2>
+        <p className="text-rose-400 font-medium mt-2">
+          This password reset link is invalid or has expired. Request a new sequence.
         </p>
-        <div className="pt-4">
+        <div className="pt-8">
           <Link href="/auth/forgot-password">
-            <Button variant="outline" className="w-full">
-              Request New Link
+            <Button variant="primary" className="w-full h-14 rounded-2xl">
+              Request New Sequence
             </Button>
           </Link>
         </div>
@@ -78,18 +78,18 @@ export default function ResetPasswordForm() {
 
   if (success) {
     return (
-      <Card className="w-full max-w-md p-8 text-center space-y-4">
-        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-          <Lock className="w-6 h-6 text-green-600" />
+      <Card variant="dark-glass" className="w-full max-w-md p-10 text-center space-y-6 border-white/10">
+        <div className="w-20 h-20 bg-emerald-500/10 border border-emerald-500/20 rounded-[32px] flex items-center justify-center mx-auto">
+          <Lock className="w-10 h-10 text-emerald-500" />
         </div>
-        <h2 className="text-2xl font-bold text-slate-900">Password Reset!</h2>
-        <p className="text-slate-600">
-          Your password has been successfully updated. You can now login with your new password.
+        <h2 className="text-3xl font-black text-white tracking-tight">Security Updated</h2>
+        <p className="text-slate-400 font-medium">
+          Your credentials have been re-calibrated. You may now proceed to authentication.
         </p>
-        <div className="pt-4">
+        <div className="pt-6">
           <Link href="/auth/login">
-            <Button className="w-full">
-              Login Now
+            <Button variant="primary" className="w-full h-14 rounded-2xl shadow-xl shadow-blue-500/20">
+              Proceed to Sign In
             </Button>
           </Link>
         </div>
@@ -98,42 +98,46 @@ export default function ResetPasswordForm() {
   }
 
   return (
-    <Card className="w-full max-w-md p-8">
-      <div className="text-center mb-8">
-        <h1 className="text-2xl font-bold text-slate-900">Reset Password</h1>
-        <p className="text-slate-600 mt-2">
-          Enter your new password below.
+    <Card variant="dark-glass" className="w-full max-w-md p-10 border-white/10 rounded-[40px]">
+      <div className="text-center mb-10">
+        <h1 className="text-3xl font-black text-white tracking-tight">Re-calibrate Access</h1>
+        <p className="text-slate-400 font-medium mt-2">
+          Enter your new security credentials below.
         </p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-
         <Input
-          label="New Password"
+          label="New Security Password"
           type="password"
+          variant="dark"
           placeholder="••••••••"
           showPasswordToggle
-          icon={<Lock className="w-4 h-4" />}
+          icon={<Lock className="w-5 h-5" />}
           error={errors.password?.message}
+          className="rounded-2xl"
           {...register('password')}
         />
 
         <Input
-          label="Confirm New Password"
+          label="Confirm Security Credentials"
           type="password"
+          variant="dark"
           placeholder="••••••••"
           showPasswordToggle
-          icon={<Lock className="w-4 h-4" />}
+          icon={<Lock className="w-5 h-5" />}
           error={errors.confirmPassword?.message}
+          className="rounded-2xl"
           {...register('confirmPassword')}
         />
 
         <Button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700"
+          variant="primary"
+          className="w-full h-14 rounded-2xl text-lg shadow-xl shadow-blue-500/20 pt-1"
           isLoading={isLoading}
         >
-          Reset Password
+          Update Credentials
         </Button>
       </form>
     </Card>

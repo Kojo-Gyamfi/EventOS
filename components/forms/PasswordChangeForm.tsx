@@ -47,28 +47,30 @@ export default function PasswordChangeForm() {
     }
 
     return (
-        <Card className="p-6">
-            <div className="flex items-center gap-2 mb-6">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                    <Lock className="w-5 h-5 text-blue-600" />
+        <Card variant="dark-glass" className="p-8 border-white/5">
+            <div className="flex items-center gap-2 mb-8">
+                <div className="p-2.5 bg-blue-500/10 border border-blue-500/20 rounded-xl">
+                    <Lock className="w-5 h-5 text-blue-500" />
                 </div>
-                <h2 className="text-xl font-bold text-slate-900">Secure Password</h2>
+                <h2 className="text-xl font-bold text-white">Security Protocol</h2>
             </div>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                 <Input
-                    label="Current Password"
+                    label="Current Access Key"
                     type="password"
+                    variant="dark"
                     placeholder="••••••••"
                     showPasswordToggle
                     error={errors.currentPassword?.message}
                     {...register('currentPassword')}
                 />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <Input
-                        label="New Password"
+                        label="New Access Key"
                         type="password"
+                        variant="dark"
                         placeholder="••••••••"
                         showPasswordToggle
                         error={errors.newPassword?.message}
@@ -76,8 +78,9 @@ export default function PasswordChangeForm() {
                     />
 
                     <Input
-                        label="Confirm New Password"
+                        label="Confirm New Key"
                         type="password"
+                        variant="dark"
                         placeholder="••••••••"
                         showPasswordToggle
                         error={errors.confirmPassword?.message}
@@ -89,9 +92,9 @@ export default function PasswordChangeForm() {
                     <Button
                         type="submit"
                         isLoading={isLoading}
-                        className="w-full sm:w-auto"
+                        className="w-full h-12 shadow-lg shadow-blue-500/20"
                     >
-                        Update Password
+                        Update Security Protocol
                     </Button>
                 </div>
             </form>

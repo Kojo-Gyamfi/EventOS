@@ -60,9 +60,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               'focus:outline-none focus:ring-4',
               'disabled:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed',
               isDark ? [
-                'bg-slate-800/50 border-slate-700 text-white placeholder:text-slate-500',
-                'focus:ring-blue-500/10 focus:border-blue-500 focus:bg-slate-800',
-                error ? 'border-red-500/50 focus:ring-red-500/10 focus:border-red-500' : 'hover:border-slate-600'
+                'bg-white/5 border-white/10 text-white placeholder:text-slate-500',
+                'focus:ring-blue-500/20 focus:border-blue-500/50 focus:bg-white/10',
+                error ? 'border-red-500/50 focus:ring-red-500/10 focus:border-red-500' : 'hover:border-white/20'
               ] : [
                 'bg-white border-slate-200 text-slate-900 placeholder:text-slate-400',
                 'focus:ring-blue-600/5 focus:border-blue-600 shadow-sm',

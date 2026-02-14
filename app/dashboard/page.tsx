@@ -25,7 +25,7 @@ export default async function DashboardPage() {
   })
 
   // Calculate detailed stats
-  const totalEvents = await db.event.count({ where: { userId: session.user.id } })
+  const totalEvents = events.length
   const totalRSVPs = events.reduce((acc, curr) => acc + (curr._count?.rsvps || 0), 0)
 
   // Recent 4 events for the list
