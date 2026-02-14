@@ -17,7 +17,7 @@ export default async function EventPage({ params }: { params: Promise<{ eventId:
       id: eventId,
       userId: session.user.id,
     },
-     include: {
+    include: {
       rsvps: {
         orderBy: { createdAt: 'desc' }
       }
@@ -32,27 +32,27 @@ export default async function EventPage({ params }: { params: Promise<{ eventId:
   // Actually EventForm handles string conversion.
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold text-slate-900 mb-2">{event.title}</h1>
-        <div className="flex items-center gap-4 text-sm text-slate-500">
-             <span>{new Date(event.date).toLocaleDateString()}</span>
-             <span>•</span>
-             <span>{event.location || 'Online'}</span>
+    <div className="max-w-4xl mx-auto space-y-12">
+      <div className="pb-8 border-b border-white/5">
+        <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-4">{event.title}</h1>
+        <div className="flex items-center gap-6 text-base font-bold text-slate-500">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
+            {new Date(event.date).toLocaleDateString(undefined, { dateStyle: 'long' })}
+          </div>
+          <span>•</span>
+          <span className="text-slate-400">{event.location || 'Online / Virtual'}</span>
         </div>
       </div>
 
-       <div className="grid gap-8">
-          {/* We can use a client component wrapper for tabs or just render form for now. 
-              The plan mentioned AttendeeList. Let's create it.
-          */}
-          <EventForm initialData={event} isEditing />
-          
-          <div className="border-t border-slate-200 pt-8">
-             <h2 className="text-xl font-bold text-slate-900 mb-4">Guest List</h2>
-             <AttendeeList rsvps={event.rsvps} />
-          </div>
-       </div>
+      <div className="grid gap-12">
+        <EventForm initialData={event} isEditing />
+
+        <div className="pt-8">
+          <h2 className="text-3xl font-black text-white mb-8 tracking-tight">Guest List</h2>
+          <AttendeeList rsvps={event.rsvps} />
+        </div>
+      </div>
     </div>
   )
 }

@@ -20,53 +20,53 @@ export default function EventTable({ events, onDelete }: EventTableProps) {
   return (
     <div className="overflow-x-auto">
       <Table>
-        <TableHeader className="bg-slate-50/50">
-          <TableRow className="border-b border-slate-100 hover:bg-transparent">
-            <TableHead className="py-5 px-6 text-slate-400 font-bold uppercase tracking-wider text-[10px]">Event Details</TableHead>
-            <TableHead className="py-5 px-6 text-slate-400 font-bold uppercase tracking-wider text-[10px]">Date & Time</TableHead>
-            <TableHead className="py-5 px-4 text-slate-400 font-bold uppercase tracking-wider text-[10px]">Location</TableHead>
-            <TableHead className="py-5 px-4 text-slate-400 font-bold uppercase tracking-wider text-[10px]">Attendees</TableHead>
-            <TableHead className="py-5 px-6 text-right text-slate-400 font-bold uppercase tracking-wider text-[10px]">Actions</TableHead>
+        <TableHeader className="bg-white/5">
+          <TableRow className="border-b border-white/5 hover:bg-transparent">
+            <TableHead className="py-6 px-6 text-slate-500 font-black uppercase tracking-[0.2em] text-[10px]">Event Details</TableHead>
+            <TableHead className="py-6 px-6 text-slate-500 font-black uppercase tracking-[0.2em] text-[10px]">Date & Time</TableHead>
+            <TableHead className="py-6 px-4 text-slate-500 font-black uppercase tracking-[0.2em] text-[10px]">Location</TableHead>
+            <TableHead className="py-6 px-4 text-slate-500 font-black uppercase tracking-[0.2em] text-[10px]">Attendees</TableHead>
+            <TableHead className="py-6 px-6 text-right text-slate-500 font-black uppercase tracking-[0.2em] text-[10px]">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {events.map((event) => (
-            <TableRow key={event.id} className="group border-b border-slate-50 hover:bg-slate-50/50 transition-colors">
-              <TableCell className="py-5 px-6">
+            <TableRow key={event.id} className="group border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+              <TableCell className="py-6 px-6">
                 <div className="flex flex-col">
-                  <span className="text-slate-900 font-bold group-hover:text-blue-600 transition-colors">{event.title}</span>
-                  <span className="text-slate-400 text-xs mt-0.5 font-medium">/{event.slug}</span>
+                  <span className="text-white font-bold group-hover:text-blue-400 transition-colors text-base">{event.title}</span>
+                  <span className="text-slate-500 text-xs mt-1 font-bold tracking-tight">/{event.slug}</span>
                 </div>
               </TableCell>
-              <TableCell className="py-5 px-6 font-medium text-slate-600">
+              <TableCell className="py-6 px-6 font-bold text-slate-400">
                 {formatDate(event.date)}
               </TableCell>
-              <TableCell className="py-5 px-4 font-medium text-slate-500">
+              <TableCell className="py-6 px-4 font-bold text-slate-500">
                 {event.location || (
-                  <span className="text-blue-500 bg-blue-50 px-2 py-1 rounded-lg text-xs font-bold uppercase tracking-tight">Virtual</span>
+                  <span className="text-blue-400 bg-blue-500/10 px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.1)]">Virtual</span>
                 )}
               </TableCell>
-              <TableCell className="py-5 px-4">
-                <div className="inline-flex items-center px-3 py-1 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200 shadow-xs">
+              <TableCell className="py-6 px-4">
+                <div className="inline-flex items-center px-4 py-1.5 rounded-xl text-xs font-black bg-white/5 text-slate-300 border border-white/10 shadow-lg">
                   {event._count?.rsvps || 0} RSVPs
                 </div>
               </TableCell>
-              <TableCell className="py-5 px-6 text-right">
-                <div className="flex items-center justify-end gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+              <TableCell className="py-6 px-6 text-right">
+                <div className="flex items-center justify-end gap-2 px-1">
                   <Link href={`/events/${event.slug}`} target="_blank">
-                    <Button variant="secondary" size="sm" className="h-9 w-9 p-0 rounded-xl bg-slate-100 border-0 hover:bg-blue-100 hover:text-blue-600 transition-all">
+                    <Button variant="secondary" size="sm" className="h-10 w-10 p-0 rounded-2xl bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-blue-600 hover:border-blue-500 transition-all shadow-xl">
                       <Eye className="w-4 h-4" />
                     </Button>
                   </Link>
                   <Link href={`/dashboard/events/${event.id}`}>
-                    <Button variant="secondary" size="sm" className="h-9 w-9 p-0 rounded-xl bg-slate-100 border-0 hover:bg-indigo-100 hover:text-indigo-600 transition-all">
+                    <Button variant="secondary" size="sm" className="h-10 w-10 p-0 rounded-2xl bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-indigo-600 hover:border-indigo-500 transition-all shadow-xl">
                       <Edit className="w-4 h-4" />
                     </Button>
                   </Link>
                   <Button
                     variant="secondary"
                     size="sm"
-                    className="h-9 w-9 p-0 rounded-xl bg-slate-100 border-0 text-rose-500 hover:bg-rose-100 hover:text-rose-600 transition-all"
+                    className="h-10 w-10 p-0 rounded-2xl bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-rose-600 hover:border-rose-500 transition-all shadow-xl"
                     onClick={() => onDelete(event.id)}
                   >
                     <Trash2 className="w-4 h-4" />
@@ -77,8 +77,8 @@ export default function EventTable({ events, onDelete }: EventTableProps) {
           ))}
           {events.length === 0 && (
             <TableRow>
-              <TableCell colSpan={5} className="text-center py-20 text-slate-500 font-medium">
-                No events discovered yet.
+              <TableCell colSpan={5} className="text-center py-24 text-slate-500 font-bold italic">
+                No orbital signatures detected.
               </TableCell>
             </TableRow>
           )}

@@ -35,15 +35,17 @@ export default function AnalyticsCharts({ overviewData, growthData }: AnalyticsC
 
   if (!mounted) {
     return (
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card title="RSVP Overview">
-          <div className="h-[300px] w-full flex items-center justify-center bg-slate-50 rounded-lg animate-pulse">
-            <span className="text-slate-400">Loading Chart...</span>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <Card variant="dark-glass" className="h-[400px] border-white/5 animate-pulse">
+          <div className="flex flex-col h-full items-center justify-center space-y-4">
+            <div className="w-12 h-12 bg-white/5 rounded-2xl" />
+            <span className="text-slate-500 font-medium">Synchronizing Data...</span>
           </div>
         </Card>
-        <Card title="Activity Trends">
-          <div className="h-[300px] w-full flex items-center justify-center bg-slate-50 rounded-lg animate-pulse">
-            <span className="text-slate-400">Loading Trends...</span>
+        <Card variant="dark-glass" className="h-[400px] border-white/5 animate-pulse">
+          <div className="flex flex-col h-full items-center justify-center space-y-4">
+            <div className="w-12 h-12 bg-white/5 rounded-2xl" />
+            <span className="text-slate-500 font-medium">Mapping Trends...</span>
           </div>
         </Card>
       </div>
@@ -51,43 +53,42 @@ export default function AnalyticsCharts({ overviewData, growthData }: AnalyticsC
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <Card title="RSVP Overview">
-        <div className="h-[300px] w-full min-w-0">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <Card variant="dark-glass" className="p-8 border-white/5" title="RSVP Overview">
+        <div className="h-[320px] w-full min-w-0 mt-6 font-sans">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={overviewData} layout="vertical" margin={{ left: 20 }}>
-              <CartesianGrid strokeDasharray="3 3" vertical={true} horizontal={false} />
+            <BarChart data={overviewData} layout="vertical" margin={{ left: 10, right: 20 }}>
+              <CartesianGrid strokeDasharray="3 3" vertical={true} horizontal={false} stroke="rgba(255,255,255,0.05)" />
               <XAxis type="number" hide />
-              <YAxis 
-                type="category" 
-                dataKey="name" 
-                tick={{ fontSize: 12, fill: '#64748b' }}
+              <YAxis
+                type="category"
+                dataKey="name"
+                tick={{ fontSize: 11, fill: '#64748b', fontWeight: 600 }}
                 width={80}
+                axisLine={false}
+                tickLine={false}
               />
-              <Tooltip 
-                cursor={{ fill: 'transparent' }}
-                contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+              <Tooltip
+                cursor={{ fill: 'rgba(255,255,255,0.02)' }}
+                contentStyle={{
+                  backgroundColor: '#0f172a',
+                  borderRadius: '16px',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.5)',
+                  padding: '12px 16px',
+                  fontSize: '12px',
+                  color: '#fff'
+                }}
+                itemStyle={{ color: '#fff', fontWeight: 700 }}
               />
-              <Bar 
-                dataKey="value" 
+              <Bar
+                dataKey="value"
                 barSize={32}
                 shape={(props: any) => {
                   const { x, y, width, height, payload } = props;
-                  const radius = 4;
-                  // Draw a path with rounded corners on the right side
-                  // Start top-left
-                  // Line to top-right (minus radius)
-                  // Arc to right-side
-                  // Line to bottom-right (minus radius)
-                  // Arc to bottom
-                  // Line to bottom-left
-                  // Close
-                  
-                  // Ensure width is at least radius * 2 for proper rendering, or just clamp?
-                  // For a simple bar chart visualization we can assume positive width.
-                  
+                  const radius = 6;
                   return (
-                    <path 
+                    <path
                       d={`
                         M${x},${y} 
                         L${x + width - radius},${y} 
@@ -96,8 +97,9 @@ export default function AnalyticsCharts({ overviewData, growthData }: AnalyticsC
                         Q${x + width},${y + height} ${x + width - radius},${y + height} 
                         L${x},${y + height} 
                         Z
-                      `} 
-                      fill={payload.color} 
+                      `}
+                      fill={payload.color}
+                      className="drop-shadow-[0_0_15px_rgba(59,130,246,0.3)]"
                     />
                   );
                 }}
@@ -107,42 +109,55 @@ export default function AnalyticsCharts({ overviewData, growthData }: AnalyticsC
         </div>
       </Card>
 
-      <Card title="Activity Trends">
-        <div className="h-[300px] w-full min-w-0">
-            {growthData.length > 1 ? (
-                <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={growthData} margin={{ left: -20, right: 10 }}>
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                        <XAxis 
-                            dataKey="name" 
-                            tick={{ fontSize: 12, fill: '#64748b' }}
-                            tickLine={false}
-                            axisLine={false}
-                            dy={10}
-                        />
-                        <YAxis 
-                            tick={{ fontSize: 12, fill: '#64748b' }}
-                            tickLine={false}
-                            axisLine={false}
-                        />
-                        <Tooltip 
-                            contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
-                        />
-                        <Line 
-                            type="monotone" 
-                            dataKey="rsvps" 
-                            stroke="#3b82f6" 
-                            strokeWidth={3}
-                            dot={{ fill: '#3b82f6', strokeWidth: 2, r: 4, stroke: '#fff' }}
-                            activeDot={{ r: 6, strokeWidth: 0 }}
-                        />
-                    </LineChart>
-                </ResponsiveContainer>
-            ) : (
-                <div className="h-full flex items-center justify-center text-slate-400 text-sm">
-                    Not enough data for trends yet
-                </div>
-            )}
+      <Card variant="dark-glass" className="p-8 border-white/5" title="Activity Trends">
+        <div className="h-[320px] w-full min-w-0 mt-6 font-sans">
+          {growthData.length > 1 ? (
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={growthData} margin={{ left: -20, right: 10 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)" />
+                <XAxis
+                  dataKey="name"
+                  tick={{ fontSize: 11, fill: '#64748b', fontWeight: 600 }}
+                  tickLine={false}
+                  axisLine={false}
+                  dy={10}
+                />
+                <YAxis
+                  tick={{ fontSize: 11, fill: '#64748b', fontWeight: 600 }}
+                  tickLine={false}
+                  axisLine={false}
+                />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: '#0f172a',
+                    borderRadius: '16px',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.5)',
+                    padding: '12px 16px',
+                    fontSize: '12px',
+                    color: '#fff'
+                  }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="rsvps"
+                  stroke="#3b82f6"
+                  strokeWidth={4}
+                  dot={{ fill: '#3b82f6', strokeWidth: 3, r: 5, stroke: '#030712' }}
+                  activeDot={{ r: 8, strokeWidth: 0, fill: '#60a5fa' }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="h-full flex flex-col items-center justify-center space-y-4">
+              <div className="w-16 h-16 bg-white/5 rounded-3xl flex items-center justify-center border border-white/5">
+                <span className="text-2xl text-slate-700">📊</span>
+              </div>
+              <p className="text-slate-500 font-medium text-center max-w-[180px]">
+                Not enough data for high-resolution trends yet
+              </p>
+            </div>
+          )}
         </div>
       </Card>
     </div>

@@ -15,15 +15,15 @@ export default async function ProfilePage() {
     const user = session.user
 
     return (
-        <div className="max-w-4xl mx-auto space-y-8">
-            <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-3">
-                    <div className="p-2.5 bg-blue-600 rounded-xl shadow-lg shadow-blue-200">
-                        <Settings className="w-6 h-6 text-white" />
+        <div className="max-w-4xl mx-auto space-y-10">
+            <div className="flex flex-col gap-3">
+                <div className="flex items-center gap-4">
+                    <div className="p-3 bg-blue-600 rounded-2xl shadow-2xl shadow-blue-500/20">
+                        <Settings className="w-7 h-7 text-white" />
                     </div>
-                    <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Account Settings</h1>
+                    <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight">Account Settings</h1>
                 </div>
-                <p className="text-slate-500 font-medium ml-1">Manage your personal information and security preferences.</p>
+                <p className="text-lg text-slate-400 font-medium ml-1">Manage your security profile and personal synchronization.</p>
             </div>
 
             <div className="grid grid-cols-1 gap-8">

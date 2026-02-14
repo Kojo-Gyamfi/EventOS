@@ -71,7 +71,7 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
                     value={initialData.email}
                     disabled
                     variant="dark"
-                    className="cursor-not-allowed opacity-70"
+                    helperText="This email is linked to your authentication provider."
                 />
 
                 <Input

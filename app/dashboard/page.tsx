@@ -36,11 +36,11 @@ export default async function DashboardPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
+          <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight">
             Dashboard
           </h1>
-          <p className="text-lg text-slate-500 mt-2 font-medium">
-            Welcome back, <span className="text-blue-600 font-bold">{session.user.name}</span>. Here's what's happening.
+          <p className="text-lg text-slate-400 mt-2 font-medium">
+            Welcome back, <span className="text-blue-500 font-bold">{session.user.name}</span>. Here's what's happening.
           </p>
         </div>
         <Link href="/dashboard/events/new">
@@ -58,62 +58,62 @@ export default async function DashboardPage() {
             label: 'Total Events',
             value: totalEvents,
             icon: CalendarDays,
-            bg: 'bg-blue-50',
-            text: 'text-blue-600',
+            color: 'text-blue-500',
+            glow: 'bg-blue-500/10',
           },
           {
             label: 'Total RSVPs',
             value: totalRSVPs,
             icon: Users,
-            bg: 'bg-indigo-50',
-            text: 'text-indigo-600',
+            color: 'text-indigo-500',
+            glow: 'bg-indigo-500/10',
           },
           {
             label: 'Active Events',
             value: events.filter((e) => new Date(e.date) > new Date()).length,
             icon: TrendingUp,
-            bg: 'bg-emerald-50',
-            text: 'text-emerald-600',
+            color: 'text-emerald-500',
+            glow: 'bg-emerald-500/10',
           }
         ].map((stat) => (
           <Card
             key={stat.label}
-            variant="default"
-            className={cn("relative overflow-hidden border-0 shadow-xl shadow-slate-200/70 p-4 rounded-[30px] group hover:-translate-y-1 transition-transform duration-300")}
+            variant="dark-glass"
+            className={cn("relative overflow-hidden border-white/5 p-8 rounded-[40px] group hover:-translate-y-1 transition-all duration-300")}
           >
             <div className="flex items-center gap-6 relative z-10">
-              <div className={cn("w-5 h-5 rounded-3xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3", stat.bg, stat.text)}>
-                <stat.icon className="w-6 h-6" />
+              <div className={cn("w-14 h-14 rounded-3xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 border border-white/5", stat.glow)}>
+                <stat.icon className={cn("w-7 h-7", stat.color)} />
               </div>
               <div>
-                <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">{stat.label}</p>
-                <p className="text-3xl font-black text-slate-900 mt-1">{stat.value}</p>
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-[0.2em]">{stat.label}</p>
+                <p className="text-4xl font-black text-white mt-1 tracking-tight">{stat.value}</p>
               </div>
             </div>
-            <div className={cn("absolute -bottom-6 -right-6 w-24 h-24 rounded-full opacity-10 blur-3xl", stat.bg)} />
+            <div className={cn("absolute -bottom-6 -right-6 w-32 h-32 rounded-full opacity-10 blur-3xl", stat.glow)} />
           </Card>
         ))}
       </div>
 
       {/* Recent Events Section */}
-      <div className="space-y-6">
+      <div className="space-y-8">
         <div className="flex items-center justify-between px-2">
-          <h2 className="text-2xl font-black text-slate-900 tracking-tight">Recent Events</h2>
-          <Link href="/dashboard/events" className="group flex items-center gap-2 text-blue-600 hover:text-blue-700 font-bold text-sm bg-blue-50 py-2 px-4 rounded-xl transition-all">
+          <h2 className="text-2xl font-black text-white tracking-tight">Recent Events</h2>
+          <Link href="/dashboard/events" className="group flex items-center gap-2 text-slate-300 hover:text-white font-bold text-sm bg-white/5 hover:bg-white/10 py-2.5 px-5 rounded-xl transition-all border border-white/5">
             View All
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
 
         {recentEvents.length === 0 ? (
-          <Card className="flex flex-col items-center justify-center py-24 glass-effect rounded-[40px] border-2 border-dashed border-slate-200">
-            <div className="w-24 h-24 bg-blue-50 text-blue-400 rounded-[32px] flex items-center justify-center mb-6 shadow-inner">
+          <Card variant="dark-glass" className="flex flex-col items-center justify-center py-24 rounded-[40px] border-white/5 border-dashed">
+            <div className="w-24 h-24 bg-white/5 text-slate-500 rounded-[32px] flex items-center justify-center mb-6 border border-white/5">
               <CalendarDays className="w-10 h-10" />
             </div>
-            <h3 className="text-2xl font-bold text-slate-900 mb-2">No events found</h3>
+            <h3 className="text-2xl font-bold text-white mb-2">No events found</h3>
             <p className="text-slate-500 mb-10 max-w-sm text-center font-medium">Ready to host your next big thing? Start by creating your first event today.</p>
             <Link href="/dashboard/events/new">
-              <Button variant="primary" className="rounded-2xl px-8 shadow-xl shadow-blue-500/20">Create Your First Event</Button>
+              <Button variant="primary" className="rounded-2xl px-10 h-14 shadow-2xl shadow-blue-500/20">Create Your First Event</Button>
             </Link>
           </Card>
         ) : (

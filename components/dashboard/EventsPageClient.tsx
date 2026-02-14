@@ -49,20 +49,20 @@ export default function EventsPageClient({ events: initialEvents }: { events: an
     }
 
     return (
-        <div className="space-y-10">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-2">
+        <div className="space-y-12">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-8 pb-4 border-b border-white/5">
                 <div>
-                    <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight">Events</h1>
-                    <p className="text-slate-500 mt-2 font-medium">Manage your upcoming and past events efficiently.</p>
+                    <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight">Events</h1>
+                    <p className="text-lg text-slate-400 mt-2 font-medium">Manage your security perimeter and event portfolio.</p>
                 </div>
 
-                <div className="flex items-center gap-4">
-                    <div className="flex items-center bg-slate-100 p-1.5 rounded-2xl border border-slate-200 shadow-inner">
+                <div className="flex items-center gap-5">
+                    <div className="flex items-center bg-white/5 p-1.5 rounded-2xl border border-white/5 shadow-inner backdrop-blur-xl">
                         <button
                             onClick={() => setViewMode('grid')}
                             className={cn(
-                                "p-2.5 rounded-xl transition-all duration-300",
-                                viewMode === 'grid' ? "bg-white text-blue-600 shadow-md" : "text-slate-500 hover:text-slate-900"
+                                "p-3 rounded-xl transition-all duration-300",
+                                viewMode === 'grid' ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20" : "text-slate-500 hover:text-white"
                             )}
                         >
                             <LayoutGrid className="w-5 h-5" />
@@ -70,8 +70,8 @@ export default function EventsPageClient({ events: initialEvents }: { events: an
                         <button
                             onClick={() => setViewMode('table')}
                             className={cn(
-                                "p-2.5 rounded-xl transition-all duration-300",
-                                viewMode === 'table' ? "bg-white text-blue-600 shadow-md" : "text-slate-500 hover:text-slate-900"
+                                "p-3 rounded-xl transition-all duration-300",
+                                viewMode === 'table' ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20" : "text-slate-500 hover:text-white"
                             )}
                         >
                             <List className="w-5 h-5" />
@@ -79,9 +79,9 @@ export default function EventsPageClient({ events: initialEvents }: { events: an
                     </div>
 
                     <Link href="/dashboard/events/new">
-                        <Button className="gap-2 shadow-xl shadow-blue-500/10 py-6" variant="primary">
+                        <Button className="gap-2 shadow-2xl shadow-blue-500/20 px-8 py-7 rounded-2xl" variant="primary">
                             <Plus className="w-5 h-5" />
-                            <span className="font-bold">Create Event</span>
+                            <span className="text-lg font-bold">Create Event</span>
                         </Button>
                     </Link>
                 </div>
@@ -102,16 +102,16 @@ export default function EventsPageClient({ events: initialEvents }: { events: an
                     {initialEvents.length === 0 && (
                         <motion.div
                             variants={item}
-                            className="col-span-full py-24 text-center glass-effect rounded-[32px] border-2 border-dashed border-slate-200"
+                            className="col-span-full py-24 text-center glass-effect rounded-[40px] border-white/5 border-dashed"
                         >
-                            <div className="w-20 h-20 bg-blue-50 text-blue-400 rounded-3xl flex items-center justify-center mx-auto mb-6">
-                                <CalendarDays className="w-10 h-10" />
+                            <div className="w-24 h-24 bg-white/5 text-slate-500 rounded-[32px] flex items-center justify-center mx-auto mb-8 border border-white/5">
+                                <CalendarDays className="w-12 h-12" />
                             </div>
-                            <h3 className="text-xl font-bold text-slate-900 mb-2">No events discovered yet</h3>
-                            <p className="text-slate-500 mb-8 max-w-sm mx-auto">Start by creating your first event to reach out to your audience and manage attendees.</p>
+                            <h3 className="text-2xl font-black text-white mb-3 tracking-tight">No events discovered yet</h3>
+                            <p className="text-slate-400 mb-10 max-w-sm mx-auto font-medium leading-relaxed">Ready to synchronize your first audience? Start by creating your first event today.</p>
                             <Link href="/dashboard/events/new">
-                                <Button variant="outline" className="rounded-2xl border-2">
-                                    Get Started Now
+                                <Button variant="primary" className="rounded-2xl px-10 h-14 shadow-2xl shadow-blue-500/20">
+                                    Initialize First Sequence
                                 </Button>
                             </Link>
                         </motion.div>
@@ -121,8 +121,9 @@ export default function EventsPageClient({ events: initialEvents }: { events: an
                 <motion.div
                     initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="bg-white rounded-[32px] border border-slate-200 overflow-hidden shadow-2xl shadow-slate-200/50"
+                    className="bg-slate-950/40 backdrop-blur-2xl rounded-[40px] border border-white/5 overflow-hidden shadow-2xl"
                 >
+                    {/* Note: EventTable might need its own updates for perfect consistency, but its container is now glass */}
                     <EventTable events={initialEvents} onDelete={handleDelete} />
                 </motion.div>
             )}

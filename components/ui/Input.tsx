@@ -58,7 +58,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               icon ? 'pl-11' : 'px-4',
               isPassword && showPasswordToggle ? 'pr-11' : 'pr-4',
               'focus:outline-none focus:ring-4',
-              'disabled:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed',
+              isDark
+                ? 'disabled:bg-white/5 disabled:opacity-60 disabled:cursor-not-allowed disabled:text-slate-400'
+                : 'disabled:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed',
               isDark ? [
                 'bg-white/5 border-white/10 text-white placeholder:text-slate-500',
                 'focus:ring-blue-500/20 focus:border-blue-500/50 focus:bg-white/10',

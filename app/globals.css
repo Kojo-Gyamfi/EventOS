@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #030712;
+  --foreground: #f8fafc;
   
   /* Premium EventOS Palette */
   --primary: #3b82f6;
@@ -34,7 +34,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Professional Dot Pattern Background */
 .bg-dot-pattern {
-  background-image: radial-gradient(circle at 1px 1px, #e2e8f0 1px, transparent 0);
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
   background-size: 24px 24px;
 }
 
