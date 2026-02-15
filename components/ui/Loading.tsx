@@ -74,7 +74,7 @@ export default function Loading({
                 transition={{ delay: 0.2 }}
                 className="mt-8 text-center space-y-2"
             >
-                <h3 className="text-lg font-black text-slate-900 tracking-tight uppercase">
+                <h3 className="text-lg font-black text-slate-100 tracking-tight uppercase">
                     {text}
                 </h3>
                 <div className="flex gap-1.5 justify-center h-1.5">

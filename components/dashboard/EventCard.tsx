@@ -90,7 +90,7 @@ export default function EventCard({ event, onDelete }: EventCardProps) {
 
         <div className="flex items-center gap-3 pt-2">
           <Link href={`/events/${event.slug}`} className="flex-1">
-            <Button variant="outline" className="w-full h-11 rounded-2xl border-white/10 text-slate-300 hover:border-blue-500/50 hover:bg-blue-500/5 hover:text-blue-400" size="sm">
+            <Button variant="outline" className="w-full h-11 rounded-2xl border-white/10 text-white/50 hover:border-blue-500/50 hover:bg-blue-500/5 hover:text-blue-400" size="sm">
               <Eye className="w-4 h-4 mr-2" />
               View
             </Button>

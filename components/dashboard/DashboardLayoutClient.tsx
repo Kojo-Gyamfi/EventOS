@@ -79,34 +79,35 @@ export default function DashboardLayoutClient({ children }: { children: React.Re
       >
         <div className="h-full flex flex-col">
           {/* Logo */}
-          <div className="h-20 flex items-center px-8 border-b border-white/5">
-            <Link href="/dashboard" className="flex items-center gap-3 group">
+          <div className="h-14 flex items-center px-4 border-b border-white/5">
+            <Link href="/dashboard" className="flex items-center gap-2 group">
               <motion.div
                 whileHover={{ rotate: 10, scale: 1.1 }}
-                className="w-10 h-10 bg-linear-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-[0_5px_15px_-3px_rgba(59,130,246,0.4)]"
+                className="w-8 h-8 bg-linear-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center shadow-[0_5px_15px_-3px_rgba(59,130,246,0.4)]"
               >
-                <LayoutDashboard className="w-5 h-5 text-white" />
+                <LayoutDashboard className="w-4 h-4 text-white" />
               </motion.div>
-              <span className="font-extrabold text-2xl tracking-tight text-white leading-none">
+              <span className="font-extrabold text-xl tracking-tight text-white leading-none">
                 Event<span className="text-blue-500">OS</span>
               </span>
             </Link>
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 p-6 space-y-8 overflow-y-auto">
-            <div>
+          <nav className="flex-1 p-3 space-y-2 min-h-0">
+            {/* Hide Create Event button on mobile to save space */}
+            <div className="hidden lg:block">
               <Link href="/dashboard/events/new" onClick={() => setIsSidebarOpen(false)}>
-                <Button className="w-full shadow-2xl shadow-blue-500/10 rounded-2xl py-6" variant="primary">
-                  <Plus className="w-5 h-5 mr-1" />
+                <Button className="w-full shadow-2xl shadow-blue-500/10 rounded-2xl py-4" variant="primary">
+                  <Plus className="w-4 h-4 mr-1" />
                   Create Event
                 </Button>
               </Link>
             </div>
 
-            <div className="space-y-1.5">
-              <p className="px-3 text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-4">
-                Main Menu
+            <div className="space-y-0.5">
+              <p className="px-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                Menu
               </p>
               {navigation.map((item) => {
                 const isActive = pathname === item.href
@@ -116,18 +117,18 @@ export default function DashboardLayoutClient({ children }: { children: React.Re
                     href={item.href}
                     onClick={() => setIsSidebarOpen(false)}
                     className={cn(
-                      "group flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-2xl transition-all duration-200 relative",
+                      "group flex items-center gap-2 px-2.5 py-2 text-sm font-semibold rounded-lg transition-all duration-200 relative",
                       isActive
-                        ? "bg-blue-600 text-white shadow-xl shadow-blue-500/20"
+                        ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20"
                         : "text-slate-400 hover:bg-white/5 hover:text-white"
                     )}
                   >
-                    <item.icon className={cn("w-5 h-5 transition-all duration-200", isActive ? "text-white" : "text-slate-500 group-hover:text-blue-400 group-hover:scale-110")} />
-                    {item.name}
+                    <item.icon className={cn("w-4 h-4 transition-all duration-200", isActive ? "text-white" : "text-slate-300 group-hover:text-blue-400 group-hover:scale-110")} />
+                    <span>{item.name}</span>
                     {isActive && (
                       <motion.div
                         layoutId="activeNav"
-                        className="absolute inset-0 bg-blue-600 rounded-2xl -z-10"
+                        className="absolute inset-0 bg-blue-600 rounded-lg -z-10"
                         transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -138,19 +139,19 @@ export default function DashboardLayoutClient({ children }: { children: React.Re
           </nav>
 
           {/* User Profile */}
-          <div className="p-6 border-t border-white/5 bg-white/2">
+          <div className="p-3 border-t border-white/5 bg-white/2 shrink-0">
             <div
-              className="flex items-center gap-3 px-2 py-3 mb-4 group cursor-pointer"
+              className="flex items-center gap-2 px-1.5 py-1.5 mb-2 group cursor-pointer"
               onClick={() => {
                 setIsSidebarOpen(false)
                 router.push('/dashboard/profile')
               }}
             >
               <div className="relative">
-                <div className="w-10 h-10 rounded-xl bg-linear-to-br from-blue-600/10 to-indigo-600/10 flex items-center justify-center text-blue-500 font-bold text-lg border border-white/5 shadow-sm transition-transform group-hover:scale-105">
+                <div className="w-8 h-8 rounded-lg bg-linear-to-br from-blue-600/10 to-indigo-600/10 flex items-center justify-center text-blue-500 font-bold text-sm border border-white/5 shadow-sm transition-transform group-hover:scale-105">
                   {session?.user?.name?.[0] || 'U'}
                 </div>
-                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-slate-950 rounded-full"></div>
+                <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-green-500 border border-slate-950 rounded-full"></div>
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-bold text-white truncate">
@@ -167,9 +168,9 @@ export default function DashboardLayoutClient({ children }: { children: React.Re
                 toast.success("Logged out successfully")
                 router.push('/auth/login')
               }}
-              className="flex w-full items-center gap-3 px-4 py-3 text-sm font-bold text-white hover:text-red-400 rounded-2xl hover:bg-red-500/5 transition-all group"
+              className="flex w-full items-center justify-center gap-2 px-3 py-2 text-sm font-bold text-white bg-red-500/10 hover:bg-red-500 border border-red-500/20 hover:border-red-500 rounded-lg transition-all group shadow-lg shadow-red-500/5 hover:shadow-red-500/20"
             >
-              <LogOut className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
+              <LogOut className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" />
               Sign Out
             </button>
           </div>
@@ -189,10 +190,24 @@ export default function DashboardLayoutClient({ children }: { children: React.Re
             </span>
           </Link>
           <button
-            onClick={() => setIsSidebarOpen(true)}
-            className="p-3 bg-white/5 text-white hover:bg-white/10 rounded-xl transition-colors"
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            className="p-3 bg-white/5 text-white hover:bg-white/10 rounded-xl transition-colors relative w-12 h-12 flex items-center justify-center"
+            aria-label="Toggle menu"
           >
-            <Menu className="w-6 h-6" />
+            <div className="w-5 h-5 flex flex-col items-center justify-center">
+              <motion.span
+                animate={isSidebarOpen ? { rotate: 45, y: 0 } : { rotate: 0, y: -6 }}
+                className="w-5 h-0.5 bg-white rounded-full absolute"
+              />
+              <motion.span
+                animate={isSidebarOpen ? { opacity: 0 } : { opacity: 1 }}
+                className="w-5 h-0.5 bg-white rounded-full absolute"
+              />
+              <motion.span
+                animate={isSidebarOpen ? { rotate: -45, y: 0 } : { rotate: 0, y: 6 }}
+                className="w-5 h-0.5 bg-white rounded-full absolute"
+              />
+            </div>
           </button>
         </header>
 

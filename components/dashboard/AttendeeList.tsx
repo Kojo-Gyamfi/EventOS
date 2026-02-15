@@ -18,33 +18,35 @@ export default function AttendeeList({ rsvps }: AttendeeListProps) {
 
   return (
     <div className="bg-slate-950/40 backdrop-blur-2xl rounded-[32px] border border-white/5 overflow-hidden shadow-2xl">
-      <Table>
-        <TableHeader className="bg-white/5">
-          <TableRow className="border-b border-white/5 hover:bg-transparent">
-            <TableHead className="py-5 px-6 text-slate-500 font-black uppercase tracking-widest text-[10px]">Name</TableHead>
-            <TableHead className="py-5 px-6 text-slate-500 font-black uppercase tracking-widest text-[10px]">Email Address</TableHead>
-            <TableHead className="py-5 px-6 text-slate-500 font-black uppercase tracking-widest text-[10px]">Status</TableHead>
-            <TableHead className="py-5 px-6 text-slate-500 font-black uppercase tracking-widest text-[10px]">Registered</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {rsvps.map((rsvp) => (
-            <TableRow key={rsvp.id} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
-              <TableCell className="py-6 px-6 font-bold text-white">{rsvp.name}</TableCell>
-              <TableCell className="py-6 px-6 font-medium text-slate-400">{rsvp.email}</TableCell>
-              <TableCell className="py-6 px-6">
-                <span className={`inline-flex items-center px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border ${rsvp.status === 'CONFIRMED' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
+      <div className="overflow-x-auto">
+        <Table className="min-w-full">
+          <TableHeader className="bg-white/5">
+            <TableRow className="border-b border-white/5 hover:bg-transparent">
+              <TableHead className="py-5 px-4 sm:px-6 text-slate-500 font-black uppercase tracking-widest text-[10px] whitespace-nowrap">Name</TableHead>
+              <TableHead className="py-5 px-4 sm:px-6 text-slate-500 font-black uppercase tracking-widest text-[10px] whitespace-nowrap">Email</TableHead>
+              <TableHead className="py-5 px-4 sm:px-6 text-slate-500 font-black uppercase tracking-widest text-[10px] whitespace-nowrap">Status</TableHead>
+              <TableHead className="py-5 px-4 sm:px-6 text-slate-500 font-black uppercase tracking-widest text-[10px] whitespace-nowrap">Registered</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {rsvps.map((rsvp) => (
+              <TableRow key={rsvp.id} className="border-b border-white/5 hover:bg-white/2 transition-colors">
+                <TableCell className="py-4 sm:py-6 px-4 sm:px-6 font-bold text-white max-w-[120px] sm:max-w-none truncate">{rsvp.name}</TableCell>
+                <TableCell className="py-4 sm:py-6 px-4 sm:px-6 font-medium text-slate-400 max-w-[150px] sm:max-w-none truncate">{rsvp.email}</TableCell>
+                <TableCell className="py-4 sm:py-6 px-4 sm:px-6">
+                  <span className={`inline-flex items-center px-2 sm:px-3 py-1 rounded-lg text-[9px] sm:text-[10px] font-black uppercase tracking-widest border whitespace-nowrap ${rsvp.status === 'CONFIRMED' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
                     rsvp.status === 'DECLINED' ? 'bg-rose-500/10 text-rose-500 border-rose-500/20' :
                       'bg-amber-500/10 text-amber-500 border-amber-500/20'
-                  }`}>
-                  {rsvp.status}
-                </span>
-              </TableCell>
-              <TableCell className="py-6 px-6 font-bold text-slate-500">{formatDate(rsvp.createdAt)}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+                    }`}>
+                    {rsvp.status}
+                  </span>
+                </TableCell>
+                <TableCell className="py-4 sm:py-6 px-4 sm:px-6 font-bold text-slate-500 whitespace-nowrap">{formatDate(rsvp.createdAt)}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   )
 }

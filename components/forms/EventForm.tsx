@@ -68,7 +68,7 @@ export default function EventForm({ initialData, isEditing = false }: EventFormP
   }
 
   return (
-    <Card variant="dark-glass" className="max-w-3xl mx-auto p-10 md:p-12 border-white/5">
+    <Card variant="dark-glass" className="w-full p-6 sm:p-8 md:p-10 lg:p-12 border-white/5">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
         <div className="space-y-3">
           <h2 className="text-3xl font-black text-white tracking-tight">
