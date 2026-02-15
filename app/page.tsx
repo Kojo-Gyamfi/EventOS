@@ -6,7 +6,7 @@ import { motion } from "framer-motion"
 import { Calendar, TrendingUp, Users, ArrowRight, CheckCircle2, Sparkles } from "lucide-react"
 import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
-import ParticlesCanvas from "@/components/landing/ParticlesCanvas"
+import PremiumBackground from "@/components/landing/PremiumBackground"
 import { cn } from "@/lib/utils"
 
 const container = {
@@ -33,16 +33,9 @@ const item = {
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen w-full flex flex-col bg-[#030712] overflow-x-hidden pt-20">
-      {/* Animated Background Layers */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {/* Professional tsparticles Background */}
-        <ParticlesCanvas />
-
-        {/* Radial Scrim Layer for Text Separation */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#030712_40%,#030712_80%)] opacity-60" />
-        <div className="absolute inset-0 bg-dot-pattern opacity-10" />
-      </div>
+    <main className="relative min-h-screen w-full flex flex-col bg-transparent overflow-x-hidden pt-20">
+      {/* Shared Premium Background */}
+      <PremiumBackground />
 
       {/* Sticky Header with Glass Effect */}
       <header className="fixed top-0 left-0 right-0 z-50 h-20 bg-slate-950/40 backdrop-blur-2xl border-b border-white/5">
