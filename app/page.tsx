@@ -1,11 +1,13 @@
 'use client'
 
-import Image from "next/image"
+import * as React from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { Calendar, TrendingUp, Users, ArrowRight, CheckCircle2, Sparkles } from "lucide-react"
 import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
+import ParticlesCanvas from "@/components/landing/ParticlesCanvas"
+import { cn } from "@/lib/utils"
 
 const container = {
   hidden: { opacity: 0 },
@@ -32,26 +34,13 @@ const item = {
 export default function Home() {
   return (
     <main className="relative min-h-screen w-full flex flex-col bg-[#030712] overflow-x-hidden pt-20">
-      {/* Animated Mesh Gradients */}
+      {/* Animated Background Layers */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            x: [0, 100, 0],
-            y: [0, 50, 0],
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] bg-blue-600/20 rounded-full blur-[150px]"
-        />
-        <motion.div
-          animate={{
-            scale: [1.2, 1, 1.2],
-            x: [0, -80, 0],
-            y: [0, -40, 0],
-          }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          className="absolute -bottom-[10%] -right-[10%] w-[60%] h-[60%] bg-indigo-600/20 rounded-full blur-[150px]"
-        />
+        {/* Professional tsparticles Background */}
+        <ParticlesCanvas />
+
+        {/* Radial Scrim Layer for Text Separation */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#030712_40%,#030712_80%)] opacity-60" />
         <div className="absolute inset-0 bg-dot-pattern opacity-10" />
       </div>
 
@@ -96,11 +85,11 @@ export default function Home() {
 
           {/* Main Heading */}
           <motion.div variants={item} className="space-y-6">
-            <h1 className="text-6xl md:text-8xl font-black text-white tracking-tight leading-[1.1]">
+            <h1 className="text-6xl md:text-8xl font-black text-white tracking-tight leading-[1.1] drop-shadow-[0_0_30px_rgba(0,0,0,0.5)]">
               Orchestrate <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-500 to-indigo-500">Unforgettable</span> <br className="hidden md:block" />
               Experiences.
             </h1>
-            <p className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto font-medium leading-relaxed">
+            <p className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-xl">
               The all-in-one platform to plan, organize, and execute professional events with elite analytics and seamless collaboration.
             </p>
           </motion.div>

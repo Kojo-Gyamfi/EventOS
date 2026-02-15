@@ -32,20 +32,30 @@ export default async function EventPage({ params }: { params: Promise<{ eventId:
   // Actually EventForm handles string conversion.
 
   return (
-    <div className="max-w-4xl mx-auto space-y-12 px-4 sm:px-6 lg:px-8">
-      <div className="pb-8 border-b border-white/5">
-        <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white tracking-tighter mb-4 break-words">{event.title}</h1>
-        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 text-sm sm:text-base font-bold text-slate-500">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)] shrink-0" />
-            <span className="truncate">{new Date(event.date).toLocaleDateString(undefined, { dateStyle: 'long' })}</span>
+    <div className="max-w-5xl mx-auto space-y-12 px-4 sm:px-6 lg:px-8 pb-32">
+      <div className="relative group">
+        <div className="absolute -top-12 -left-12 w-64 h-64 bg-blue-600/5 rounded-full blur-[100px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+        <div className="pb-10 border-b border-white/5 relative">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="w-12 h-1 bg-blue-600 rounded-full" />
+            <span className="text-xs font-black text-blue-500 uppercase tracking-[0.3em]">Management Console</span>
           </div>
-          <span className="hidden sm:inline">•</span>
-          <span className="text-slate-400 truncate">{event.location || 'Online / Virtual'}</span>
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-white tracking-tighter mb-6 wrap-break-word leading-none">
+            {event.title}
+          </h1>
+          <div className="flex flex-wrap items-center gap-4 sm:gap-8 text-sm sm:text-base font-bold text-slate-400">
+            <div className="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-xl border border-white/5 backdrop-blur-xl">
+              <span className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)] shrink-0" />
+              <span className="truncate">{new Date(event.date).toLocaleDateString(undefined, { dateStyle: 'long' })}</span>
+            </div>
+            <div className="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-xl border border-white/5 backdrop-blur-xl">
+              <span className="text-slate-300 truncate">{event.location || 'Online / Virtual'}</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="grid gap-12">
+      <div className="grid gap-12 relative">
         <EventForm initialData={event} isEditing />
 
         <div className="pt-8 w-full max-w-full overflow-hidden">

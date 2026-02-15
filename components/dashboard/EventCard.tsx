@@ -40,7 +40,7 @@ export default function EventCard({ event, onDelete }: EventCardProps) {
             className="w-full h-full object-cover"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-white/5 to-white/[0.02]">
+          <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-white/5 to-white/2">
             <Calendar className="w-16 h-16 text-slate-800" />
           </div>
         )}
@@ -66,7 +66,8 @@ export default function EventCard({ event, onDelete }: EventCardProps) {
         </div>
       </div>
 
-      <div className="p-7 flex-1 flex flex-col">
+      <div className="p-7 flex-1 flex flex-col relative overflow-hidden group">
+        <div className="absolute inset-0 bg-linear-to-br from-white/5 to-white/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         <h3 className="text-xl font-bold text-white mb-3 line-clamp-2 leading-snug group-hover:text-blue-400 transition-colors">
           {event.title}
         </h3>
@@ -90,7 +91,7 @@ export default function EventCard({ event, onDelete }: EventCardProps) {
 
         <div className="flex items-center gap-3 pt-2">
           <Link href={`/events/${event.slug}`} className="flex-1">
-            <Button variant="outline" className="w-full h-11 rounded-2xl border-white/10 text-white/50 hover:border-blue-500/50 hover:bg-blue-500/5 hover:text-blue-400" size="sm">
+            <Button variant="outline" className="w-full h-11 rounded-2xl border-white/10 text-white/50 hover:border-blue-500/50 hover:bg-blue-500/5 hover:text-slate-900" size="sm">
               <Eye className="w-4 h-4 mr-2" />
               View
             </Button>

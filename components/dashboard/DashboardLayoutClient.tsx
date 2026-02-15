@@ -244,7 +244,7 @@ export default function DashboardLayoutClient({ children, session }: DashboardLa
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] overflow-hidden"
+            className="fixed inset-0 z-100 overflow-hidden"
           >
             <Loading fullscreen text="Signing Out" />
           </motion.div>

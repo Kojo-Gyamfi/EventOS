@@ -31,7 +31,7 @@ export default function EventTable({ events, onDelete }: EventTableProps) {
         </TableHeader>
         <TableBody>
           {events.map((event) => (
-            <TableRow key={event.id} className="group border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+            <TableRow key={event.id} className="group border-b border-white/5 hover:bg-white/2 transition-colors">
               <TableCell className="py-6 px-6">
                 <div className="flex flex-col">
                   <span className="text-white font-bold group-hover:text-blue-400 transition-colors text-base">{event.title}</span>
