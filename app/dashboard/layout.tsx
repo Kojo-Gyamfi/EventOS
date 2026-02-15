@@ -7,7 +7,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
   const session = await getServerSession(authOptions)
   return (
     <AuthProvider session={session}>
-      <DashboardLayoutClient>
+      <DashboardLayoutClient session={session}>
         {children}
       </DashboardLayoutClient>
     </AuthProvider>

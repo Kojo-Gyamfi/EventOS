@@ -54,22 +54,22 @@ export default function EventTable({ events, onDelete }: EventTableProps) {
               <TableCell className="py-6 px-6 text-right">
                 <div className="flex items-center justify-end gap-2 px-1">
                   <Link href={`/events/${event.slug}`} target="_blank">
-                    <Button variant="secondary" size="sm" className="h-10 w-10 p-0 rounded-2xl bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-blue-600 hover:border-blue-500 transition-all shadow-xl">
-                      <Eye className="w-4 h-4" />
+                    <Button variant="secondary" size="sm" className="h-13 w-13 p-0 rounded-2xl bg-white/10 border border-white/10 text-white hover:text-slate-900 hover:bg-blue-600 hover:border-blue-500 transition-all shadow-xl">
+                      <Eye className="w-12 h-12" />
                     </Button>
                   </Link>
                   <Link href={`/dashboard/events/${event.id}`}>
-                    <Button variant="secondary" size="sm" className="h-10 w-10 p-0 rounded-2xl bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-indigo-600 hover:border-indigo-500 transition-all shadow-xl">
-                      <Edit className="w-4 h-4" />
+                    <Button variant="secondary" size="sm" className="h-13 w-13 p-0 rounded-2xl bg-white/10 border border-white/10 text-white hover:text-slate-900 hover:bg-indigo-600 hover:border-indigo-500 transition-all shadow-xl">
+                      <Edit className="w-12 h-12" />
                     </Button>
                   </Link>
                   <Button
                     variant="secondary"
                     size="sm"
-                    className="h-10 w-10 p-0 rounded-2xl bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-rose-600 hover:border-rose-500 transition-all shadow-xl"
+                    className="h-13 w-13 p-0 rounded-2xl bg-white/5 border border-white/10 text-white hover:text-slate-900 hover:bg-rose-600 hover:border-rose-500 transition-all shadow-xl"
                     onClick={() => onDelete(event.id)}
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="w-12 h-12" />
                   </Button>
                 </div>
               </TableCell>

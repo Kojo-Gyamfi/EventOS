@@ -89,6 +89,7 @@ export default function EventsPageClient({ events: initialEvents }: { events: an
 
             {viewMode === 'grid' ? (
                 <motion.div
+                    key="grid-view"
                     variants={container}
                     initial="hidden"
                     animate="show"
@@ -119,6 +120,7 @@ export default function EventsPageClient({ events: initialEvents }: { events: an
                 </motion.div>
             ) : (
                 <motion.div
+                    key="table-view"
                     initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
                     className="bg-slate-950/40 backdrop-blur-2xl rounded-[40px] border border-white/5 overflow-hidden shadow-2xl"

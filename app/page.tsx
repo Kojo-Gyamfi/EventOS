@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Calendar, TrendingUp, Users, ArrowRight, CheckCircle2 } from "lucide-react"
+import { Calendar, TrendingUp, Users, ArrowRight, CheckCircle2, Sparkles } from "lucide-react"
 import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
 
@@ -31,55 +31,76 @@ const item = {
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen w-full flex flex-col bg-slate-50 overflow-x-hidden pt-20">
-      {/* Sticky Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 h-20 bg-slate-50/80 backdrop-blur-md border-b border-slate-200/50">
+    <main className="relative min-h-screen w-full flex flex-col bg-[#030712] overflow-x-hidden pt-20">
+      {/* Animated Mesh Gradients */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            x: [0, 100, 0],
+            y: [0, 50, 0],
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] bg-blue-600/20 rounded-full blur-[150px]"
+        />
+        <motion.div
+          animate={{
+            scale: [1.2, 1, 1.2],
+            x: [0, -80, 0],
+            y: [0, -40, 0],
+          }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          className="absolute -bottom-[10%] -right-[10%] w-[60%] h-[60%] bg-indigo-600/20 rounded-full blur-[150px]"
+        />
+        <div className="absolute inset-0 bg-dot-pattern opacity-10" />
+      </div>
+
+      {/* Sticky Header with Glass Effect */}
+      <header className="fixed top-0 left-0 right-0 z-50 h-20 bg-slate-950/40 backdrop-blur-2xl border-b border-white/5">
         <div className="max-w-6xl mx-auto h-full px-6 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-linear-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+          <Link href="/" className="flex items-center gap-3 group">
+            <motion.div
+              whileHover={{ rotate: 10, scale: 1.1 }}
+              className="w-10 h-10 bg-linear-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-[0_8px_20px_-4px_rgba(59,130,246,0.4)]"
+            >
               <Calendar className="w-5 h-5 text-white" />
-            </div>
-            <span className="font-extrabold text-2xl tracking-tight text-slate-900">
-              Event<span className="text-blue-600">OS</span>
+            </motion.div>
+            <span className="font-extrabold text-2xl tracking-tight text-white">
+              Event<span className="text-blue-500">OS</span>
             </span>
-          </div>
+          </Link>
 
           <Link href="/auth/login">
-            <Button variant="ghost" className="font-bold text-slate-600 hover:text-blue-600">
+            <Button variant="outline" className="border-white/20 bg-white/10 text-white hover:bg-white/20 hover:border-white/30 rounded-xl font-bold backdrop-blur-xl shadow-lg">
               Sign In
             </Button>
           </Link>
         </div>
       </header>
 
-      {/* Premium Background Pattern */}
-      <div className="fixed inset-0 bg-dot-pattern opacity-40 pointer-events-none" />
-
-      {/* Decorative Gradients */}
-      <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="fixed bottom-0 right-1/4 w-[500px] h-[500px] bg-indigo-400/10 rounded-full blur-[120px] pointer-events-none" />
-
       {/* Hero Section */}
-      <section className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 py-10 pb-20">
+      <section className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 py-20 pb-32">
         <motion.div
           variants={container}
           initial="hidden"
           animate="show"
           className="max-w-6xl w-full text-center space-y-12"
         >
-          {/* Logo Badge */}
-          <motion.div variants={item} className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-md border border-slate-200 rounded-2xl shadow-sm">
-            <div className="w-6 h-6 bg-blue-600 rounded-lg flex items-center justify-center text-[10px] text-white font-bold">OS</div>
-            <span className="text-sm font-bold text-slate-900">EventOS 2.0 is live</span>
+          {/* Badge with Glass Effect */}
+          <motion.div variants={item} className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-lg shadow-blue-500/5">
+            <div className="w-6 h-6 bg-blue-600 rounded-lg flex items-center justify-center shadow-inner">
+              <Sparkles className="w-3.5 h-3.5 text-white" />
+            </div>
+            <span className="text-sm font-bold text-slate-300">EventOS 2.0 is live</span>
           </motion.div>
 
           {/* Main Heading */}
           <motion.div variants={item} className="space-y-6">
-            <h1 className="text-6xl md:text-8xl font-black text-slate-900 tracking-tight leading-[1.1]">
-              Orchestrate <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-indigo-600">Unforgettable</span> <br className="hidden md:block" />
+            <h1 className="text-6xl md:text-8xl font-black text-white tracking-tight leading-[1.1]">
+              Orchestrate <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-500 to-indigo-500">Unforgettable</span> <br className="hidden md:block" />
               Experiences.
             </h1>
-            <p className="text-xl md:text-2xl text-slate-500 max-w-3xl mx-auto font-medium leading-relaxed">
+            <p className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto font-medium leading-relaxed">
               The all-in-one platform to plan, organize, and execute professional events with elite analytics and seamless collaboration.
             </p>
           </motion.div>
@@ -93,19 +114,19 @@ export default function Home() {
               </Button>
             </Link>
             <Link href="/auth/login">
-              <Button variant="outline" className="h-16 px-10 rounded-2xl text-lg border-2 bg-white/50 backdrop-blur-sm">
+              <Button variant="outline" className="h-16 px-10 rounded-2xl text-lg border-white/20 bg-white/10 hover:bg-white/20 text-white font-bold backdrop-blur-xl shadow-xl hover:shadow-2xl transition-all">
                 Sign In
               </Button>
             </Link>
           </motion.div>
 
-          {/* Visual Divider / Social Proof */}
+          {/* Social Proof */}
           <motion.div variants={item} className="pt-12 text-slate-400 text-sm font-bold uppercase tracking-widest flex flex-wrap justify-center items-center gap-8">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5 text-emerald-500" />
               Trusted by Creative Event Organizers
             </div>
-            <div className="hidden sm:block w-px h-4 bg-slate-200" />
+            <div className="hidden sm:block w-px h-4 bg-white/10" />
             <div className="flex items-center gap-2">
               <TrendingUp className="w-5 h-5 text-blue-500" />
               Elite Analytics Included
@@ -114,8 +135,8 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Features Section */}
-      <section className="relative z-10 px-6 pb-10">
+      {/* Features Section with Glass Cards */}
+      <section className="relative z-10 px-6 pb-32">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -146,24 +167,29 @@ export default function Home() {
             ].map((f, i) => (
               <Card
                 key={i}
-                className="group relative overflow-hidden p-10 border-0 shadow-2xl shadow-slate-200/50 rounded-[40px] hover:-translate-y-2 transition-transform duration-500"
+                variant="dark-glass"
+                className="group relative overflow-hidden p-10 border-white/5 rounded-[40px] hover:-translate-y-2 transition-all duration-500 shadow-2xl"
               >
-                <div className={`w-16 h-16 rounded-[24px] bg-${f.color}-50 flex items-center justify-center text-${f.color}-600 mb-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-inner`}>
-                  <f.icon className="w-8 h-8" />
+                {/* Icon with Glow */}
+                <div className={`w-16 h-16 rounded-[24px] bg-${f.color}-600/10 border border-${f.color}-500/20 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-${f.color}-500/5`}>
+                  <f.icon className={`w-8 h-8 text-${f.color}-400`} />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-4">{f.title}</h3>
-                <p className="text-slate-500 font-medium leading-relaxed">{f.desc}</p>
-                <div className={`absolute -bottom-6 -right-6 w-32 h-32 rounded-full bg-${f.color}-100 opacity-20 blur-3xl`} />
+
+                <h3 className="text-2xl font-bold text-white mb-4">{f.title}</h3>
+                <p className="text-slate-400 font-medium leading-relaxed">{f.desc}</p>
+
+                {/* Hover Glow Effect */}
+                <div className={`absolute -bottom-6 -right-6 w-32 h-32 rounded-full bg-${f.color}-500/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
               </Card>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="relative z-10 px-6 py-12 border-t border-slate-200/60 bg-white/30 backdrop-blur-sm">
-        <div className="max-w-6xl mx-auto flex items-center justify-center gap-8">
-          <p className="text-slate-400 text-sm font-bold text-center">
+      {/* Footer with Glass Effect */}
+      <footer className="relative z-10 px-6 py-12 border-t border-white/5 bg-slate-950/40 backdrop-blur-xl">
+        <div className="max-w-6xl mx-auto text-center">
+          <p className="text-slate-500 text-sm font-bold">
             © {new Date().getFullYear()} EventOS Inc.
           </p>
         </div>

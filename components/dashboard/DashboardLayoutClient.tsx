@@ -3,7 +3,8 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { signOut, useSession } from 'next-auth/react'
+import { signOut } from 'next-auth/react'
+import type { Session } from 'next-auth'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   LayoutDashboard,
@@ -18,6 +19,12 @@ import {
 import { cn } from '@/lib/utils'
 import Button from '@/components/ui/Button'
 import { toast } from 'react-toastify'
+import Loading from '@/components/ui/Loading'
+
+interface DashboardLayoutClientProps {
+  children: React.ReactNode;
+  session: Session | null;
+}
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
@@ -26,11 +33,11 @@ const navigation = [
   { name: 'Profile', href: '/dashboard/profile', icon: User },
 ]
 
-export default function DashboardLayoutClient({ children }: { children: React.ReactNode }) {
+export default function DashboardLayoutClient({ children, session }: DashboardLayoutClientProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
-  const { data: session } = useSession()
 
   return (
     <div className="min-h-screen bg-[#030712] flex overflow-hidden font-sans relative">
@@ -164,9 +171,15 @@ export default function DashboardLayoutClient({ children }: { children: React.Re
             </div>
             <button
               onClick={async () => {
-                await signOut({ redirect: false })
-                toast.success("Logged out successfully")
-                router.push('/auth/login')
+                setIsLoggingOut(true)
+                try {
+                  await signOut({ redirect: false })
+                  toast.success("Logged out successfully")
+                  router.push('/auth/login')
+                } catch (error) {
+                  setIsLoggingOut(false)
+                  toast.error("Failed to sign out")
+                }
               }}
               className="flex w-full items-center justify-center gap-2 px-3 py-2 text-sm font-bold text-white bg-red-500/10 hover:bg-red-500 border border-red-500/20 hover:border-red-500 rounded-lg transition-all group shadow-lg shadow-red-500/5 hover:shadow-red-500/20"
             >
@@ -223,6 +236,20 @@ export default function DashboardLayoutClient({ children }: { children: React.Re
           </motion.div>
         </main>
       </div>
+
+      {/* Loading Overlay for Logout */}
+      <AnimatePresence>
+        {isLoggingOut && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] overflow-hidden"
+          >
+            <Loading fullscreen text="Signing Out" />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
